@@ -5,21 +5,26 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_anasayfa"
             android:icon="@mipmap/ic_home_black_24dp"
-            android:title="Ana Sayfa" />
+            android:title="@string/anasayfa" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_etkenMaddeIlac"
             android:icon="@mipmap/ic_local_hospital_black_24dp"
-            android:title="Etken Maddesine Göre İlaçlar" />
+            android:title="@string/etkenMaddeIlaclar" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_endikasyonBilgiIlac"
             android:icon="@mipmap/ic_content_paste_black_24dp"
-            android:title="Endikasyon Bilgi. Göre İlaçlar" />
+            android:title="@string/endikasyonBilgIlaclar" />
+        <item
+            android:id="@+id/nav_cikis"
+            android:icon="@mipmap/ic_exit_to_app_black_24dp"
+            android:title="@string/cikis" />
 
     </group>
 
-    <item android:title="Communicate">
+   <!--
+   <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
@@ -31,5 +36,6 @@
                 android:title="Send" />
         </menu>
     </item>
+    -->
 
 </menu>
