@@ -6,20 +6,17 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Resim Yükleme" />
+            android:icon="@mipmap/ic_home_black_24dp"
+            android:title="Ana Sayfa" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Galeri" />
+            android:icon="@mipmap/ic_local_hospital_black_24dp"
+            android:title="Etken Maddesine Göre İlaçlar" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:icon="@mipmap/ic_content_paste_black_24dp"
+            android:title="Endikasyon Bilgi. Göre İlaçlar" />
+
     </group>
 
     <item android:title="Communicate">
