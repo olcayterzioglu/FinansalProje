@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,15 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
+public class endikasyonActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_endikasyon);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.endikasyon, menu);
         return true;
     }
 
@@ -84,27 +82,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_anasayfa) {
-            Intent i = new Intent(MainActivity.this , MainActivity.class );
+            Intent i = new Intent(endikasyonActivity.this , MainActivity.class );
             startActivity(i);
-        } else if (id == R.id.nav_etkenMaddeIlac) {
 
-            Intent h = new Intent(MainActivity.this , etkenmaddeActivity.class );
+        }
+      else if (id == R.id.nav_etkenMaddeIlac) {
+            Intent h = new Intent(endikasyonActivity.this , etkenmaddeActivity.class );
             startActivity(h);
 
-        } else if (id == R.id.nav_endikasyonBilgiIlac) {
-            Intent j = new Intent(MainActivity.this , endikasyonActivity.class );
+    } else if (id == R.id.nav_endikasyonBilgiIlac) {
+            Intent j = new Intent(endikasyonActivity.this , endikasyonActivity.class );
             startActivity(j);
 
-        } else if (id == R.id.nav_cikis) {
+    } else if (id == R.id.nav_cikis) {
 
         }
-        /*
-        else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

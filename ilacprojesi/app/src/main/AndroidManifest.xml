@@ -19,6 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".etkenmaddeActivity"
+            android:label="@string/title_activity_etkenmadde"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".endikasyonActivity"
+            android:label="@string/title_activity_endikasyon"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
