@@ -3,6 +3,7 @@ package com.example.lenovo.ilacprojesi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -17,8 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,20 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Ilaclar ilaclar = new Ilaclar("A-ferin","parasetamol" , "agri kesici", "grip","duyarlilik","tablet","gormek","athis" ,"12yas" , "doz");
+        databaseReference.child("ilaclar").child("A").child(ilaclar.getAd()).setValue(ilaclar , new DatabaseReference.CompletionListener() {
+
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if(databaseError != null)
+                {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Kaydedildi", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        } );
+
     }
 
     @Override
@@ -78,42 +95,4 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_anasayfa) {
-            Intent i = new Intent(MainActivity.this , MainActivity.class );
-            startActivity(i);
-            finish();
-        } else if (id == R.id.nav_etkenMaddeIlac) {
-
-            Intent h = new Intent(MainActivity.this , etkenmaddeActivity.class );
-            startActivity(h);
-            finish();
-
-        } else if (id == R.id.nav_endikasyonBilgiIlac) {
-            Intent j = new Intent(MainActivity.this , endikasyonActivity.class );
-            startActivity(j);
-            finish();
-        } else if (id == R.id.nav_cikis) {
-
-            System.exit(0);
-            finish();
-
-        }
-        /*
-        else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-        */
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

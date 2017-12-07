@@ -14,8 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class endikasyonActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.google.firebase.database.DatabaseReference;
+
+public class endikasyonActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,8 @@ public class endikasyonActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -49,7 +52,10 @@ public class endikasyonActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            Intent i = new Intent(endikasyonActivity.this , MainActivity.class );
+            startActivity(i);
+            finish();
         }
     }
 
@@ -73,37 +79,5 @@ public class endikasyonActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_anasayfa) {
-            Intent i = new Intent(endikasyonActivity.this , MainActivity.class );
-            startActivity(i);
-            finish();
-        }
-      else if (id == R.id.nav_etkenMaddeIlac) {
-            Intent h = new Intent(endikasyonActivity.this , etkenmaddeActivity.class );
-            startActivity(h);
-            finish();
-    } else if (id == R.id.nav_endikasyonBilgiIlac) {
-            Intent j = new Intent(endikasyonActivity.this , endikasyonActivity.class );
-            startActivity(j);
-            finish();
-    } else if (id == R.id.nav_cikis) {
-
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("EXIT", true);
-            startActivity(intent);
-            finish();
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

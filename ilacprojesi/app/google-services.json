@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "313890587090",
+    "firebase_url": "https://ilac-prospektus.firebaseio.com",
+    "project_id": "ilac-prospektus",
+    "storage_bucket": "ilac-prospektus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313890587090:android:3dbb166b028d44f7",
+        "android_client_info": {
+          "package_name": "com.example.lenovo.ilacprojesi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313890587090-2cj7h0p57lqsctoug69mtkh36njbur8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lenovo.ilacprojesi",
+            "certificate_hash": "91690a5157a15874d2e773669b744a32650c7414"
+          }
+        },
+        {
+          "client_id": "313890587090-93oleik013jvs0elgg60kbvbm3kfl779.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHO2mtlVy9uh5fCSRBu1ZWuELvqbYop54"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313890587090-93oleik013jvs0elgg60kbvbm3kfl779.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
