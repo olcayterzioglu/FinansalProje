@@ -1,4 +1,4 @@
-package com.example.lenovo.ilacprojesi;
+package com.ilac.prospektus.ilacprojesi;
 
 import org.junit.Test;
 

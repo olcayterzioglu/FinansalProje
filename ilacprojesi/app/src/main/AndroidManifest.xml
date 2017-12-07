@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.lenovo.ilacprojesi">
+    package="com.ilac.prospektus.ilacprojesi">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.ilac.prospektus.ilacprojesi.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,11 +20,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".etkenmaddeActivity"
+            android:name="com.ilac.prospektus.ilacprojesi.etkenmaddeActivity"
             android:label="@string/title_activity_etkenmadde"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".endikasyonActivity"
+            android:name="com.ilac.prospektus.ilacprojesi.endikasyonActivity"
             android:label="@string/title_activity_endikasyon"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

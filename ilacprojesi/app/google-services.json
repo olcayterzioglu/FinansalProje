@@ -8,17 +8,61 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:313890587090:android:3dbb166b028d44f7",
+        "mobilesdk_app_id": "1:313890587090:android:ca489ee7659906c3",
         "android_client_info": {
-          "package_name": "com.example.lenovo.ilacprojesi"
+          "package_name": "com.ilac.ilacprojesi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "313890587090-2cj7h0p57lqsctoug69mtkh36njbur8q.apps.googleusercontent.com",
+          "client_id": "313890587090-09n2pmf8l4miivj0uhlc548utaqs37bv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.lenovo.ilacprojesi",
+            "package_name": "com.ilac.ilacprojesi",
+            "certificate_hash": "91690a5157a15874d2e773669b744a32650c7414"
+          }
+        },
+        {
+          "client_id": "313890587090-93oleik013jvs0elgg60kbvbm3kfl779.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHO2mtlVy9uh5fCSRBu1ZWuELvqbYop54"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313890587090-93oleik013jvs0elgg60kbvbm3kfl779.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313890587090:android:45bcae980fcd5cf8",
+        "android_client_info": {
+          "package_name": "com.ilac.prospektus.ilacprojesi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313890587090-r71ss6dq2hiivintmucuovnnt7omovnb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ilac.prospektus.ilacprojesi",
             "certificate_hash": "91690a5157a15874d2e773669b744a32650c7414"
           }
         },

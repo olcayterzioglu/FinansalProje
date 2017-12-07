@@ -1,4 +1,4 @@
-package com.example.lenovo.ilacprojesi;
+package com.ilac.prospektus.ilacprojesi;
 
 /**
  * Created by Lenovo on 7.12.2017.

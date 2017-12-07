@@ -1,4 +1,4 @@
-package com.example.lenovo.ilacprojesi;
+package com.ilac.prospektus.ilacprojesi;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,19 +9,16 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.firebase.database.DatabaseReference;
-
-public class etkenmaddeActivity extends BaseActivity{
+public class endikasyonActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_etkenmadde);
+        setContentView(R.layout.activity_endikasyon);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,7 +50,7 @@ public class etkenmaddeActivity extends BaseActivity{
             drawer.closeDrawer(GravityCompat.START);
         } else {
             //super.onBackPressed();
-            Intent i = new Intent(etkenmaddeActivity.this , MainActivity.class );
+            Intent i = new Intent(endikasyonActivity.this , MainActivity.class );
             startActivity(i);
             finish();
         }
@@ -63,8 +60,7 @@ public class etkenmaddeActivity extends BaseActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
-
-        getMenuInflater().inflate(R.menu.etkenmadde, menu);
+        getMenuInflater().inflate(R.menu.endikasyon, menu);
         return true;
     }
 
@@ -79,5 +75,6 @@ public class etkenmaddeActivity extends BaseActivity{
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
