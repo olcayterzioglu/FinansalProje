@@ -1,5 +1,6 @@
 package com.example.lenovo.ilacprojesi;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -58,6 +59,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -96,6 +100,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(j);
 
         } else if (id == R.id.nav_cikis) {
+
+            System.exit(0);
 
         }
         /*

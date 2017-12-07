@@ -96,7 +96,10 @@ public class etkenmaddeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_cikis) {
 
-
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true);
+            startActivity(intent);
 
         }
 
