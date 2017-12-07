@@ -56,6 +56,8 @@ public class etkenmaddeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
+
         getMenuInflater().inflate(R.menu.etkenmadde, menu);
         return true;
     }
@@ -85,21 +87,23 @@ public class etkenmaddeActivity extends AppCompatActivity
 
             Intent h = new Intent(etkenmaddeActivity.this , MainActivity.class );
             startActivity(h);
+            finish();
         } else if (id == R.id.nav_etkenMaddeIlac) {
 
             Intent h = new Intent(etkenmaddeActivity.this , etkenmaddeActivity.class );
             startActivity(h);
-
+            finish();
         } else if (id == R.id.nav_endikasyonBilgiIlac) {
             Intent j = new Intent(etkenmaddeActivity.this , endikasyonActivity.class );
             startActivity(j);
-
+            finish();
         } else if (id == R.id.nav_cikis) {
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("EXIT", true);
             startActivity(intent);
+            finish();
 
         }
 

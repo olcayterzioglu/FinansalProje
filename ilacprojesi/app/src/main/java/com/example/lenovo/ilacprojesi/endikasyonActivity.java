@@ -56,6 +56,7 @@ public class endikasyonActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.endikasyon, menu);
         return true;
     }
@@ -84,22 +85,23 @@ public class endikasyonActivity extends AppCompatActivity
         if (id == R.id.nav_anasayfa) {
             Intent i = new Intent(endikasyonActivity.this , MainActivity.class );
             startActivity(i);
-
+            finish();
         }
       else if (id == R.id.nav_etkenMaddeIlac) {
             Intent h = new Intent(endikasyonActivity.this , etkenmaddeActivity.class );
             startActivity(h);
-
+            finish();
     } else if (id == R.id.nav_endikasyonBilgiIlac) {
             Intent j = new Intent(endikasyonActivity.this , endikasyonActivity.class );
             startActivity(j);
-
+            finish();
     } else if (id == R.id.nav_cikis) {
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("EXIT", true);
             startActivity(intent);
+            finish();
 
         }
 

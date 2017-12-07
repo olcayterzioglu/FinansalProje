@@ -90,18 +90,21 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_anasayfa) {
             Intent i = new Intent(MainActivity.this , MainActivity.class );
             startActivity(i);
+            finish();
         } else if (id == R.id.nav_etkenMaddeIlac) {
 
             Intent h = new Intent(MainActivity.this , etkenmaddeActivity.class );
             startActivity(h);
+            finish();
 
         } else if (id == R.id.nav_endikasyonBilgiIlac) {
             Intent j = new Intent(MainActivity.this , endikasyonActivity.class );
             startActivity(j);
-
+            finish();
         } else if (id == R.id.nav_cikis) {
 
             System.exit(0);
+            finish();
 
         }
         /*
