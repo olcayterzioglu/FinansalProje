@@ -4,15 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:scaleType="fitXY"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ilac.prospektus.ilacprojesi.etkenmaddeActivity"
     tools:showIn="@layout/app_bar_etkenmadde">
 
-    <TextView
-        android:id="@+id/textView2"
+    <EditText
+        android:id="@+id/txtArama1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Etken Madde Sayfası" />
+        android:layout_marginTop="205dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Etken Madde Giriniz..." />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtArama1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/ic_search_black_24dp" />
 </RelativeLayout>
