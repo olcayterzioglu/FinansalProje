@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@android:color/background_light"
     android:scaleType="fitXY"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ilac.prospektus.ilacprojesi.etkenmaddeActivity"
@@ -19,14 +19,15 @@
         android:layout_marginTop="205dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Etken Madde Giriniz..." />
+        android:hint="Etken Madde Giriniz..." />
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="200dp"
+        android:layout_height="75dp"
         android:layout_below="@+id/txtArama1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:background="@drawable/ic_search_black_24dp" />
+        android:layout_marginTop="24dp"
+        android:background="@drawable/searchbuton" />
 </RelativeLayout>
