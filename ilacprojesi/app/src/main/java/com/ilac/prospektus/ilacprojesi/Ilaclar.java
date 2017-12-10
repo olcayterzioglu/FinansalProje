@@ -1,11 +1,19 @@
 package com.ilac.prospektus.ilacprojesi;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by Lenovo on 7.12.2017.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Ilaclar {
     private String ad;
+    private String firma_adi;
+    private String barkod_no;
+    private String fiyat;
+    private String etken_madde;
     private String formul;
     private String farmokolojik_ozellik;
     private String endikasyonlar;
@@ -16,9 +24,13 @@ public class Ilaclar {
     private String kullanim_sekli;
     private String doz_asimi;
 
-    public Ilaclar(String ad, String formul , String farmokolojik_ozellik, String endikasyonlar, String kontrendikasyonlar,String uyarilar, String yan_etkiler, String etkilesimler, String kullanim_sekli, String doz_asimi ){
+    public Ilaclar(String ad, String firma_adi, String  barkod_no, String fiyat, String etken_madde, String formul , String farmokolojik_ozellik, String endikasyonlar, String kontrendikasyonlar,String uyarilar, String yan_etkiler, String etkilesimler, String kullanim_sekli, String doz_asimi ){
 
         this.ad = ad;
+        this.firma_adi = firma_adi;
+        this.barkod_no = barkod_no;
+        this.fiyat = fiyat;
+        this.etken_madde = etken_madde;
         this.formul = formul;
         this.farmokolojik_ozellik = farmokolojik_ozellik;
         this.endikasyonlar = endikasyonlar;
@@ -28,6 +40,10 @@ public class Ilaclar {
         this.etkilesimler = etkilesimler;
         this.kullanim_sekli = kullanim_sekli;
         this.doz_asimi = doz_asimi;
+
+    }
+
+    public Ilaclar() {
 
     }
 
@@ -109,6 +125,38 @@ public class Ilaclar {
 
     public void setAd(String ad) {
         this.ad = ad;
+    }
+
+    public String getFirma_adi() {
+        return firma_adi;
+    }
+
+    public void setFirma_adi(String firma_adi) {
+        this.firma_adi = firma_adi;
+    }
+
+    public String getBarkod_no() {
+        return barkod_no;
+    }
+
+    public void setBarkod_no(String barkod_no) {
+        this.barkod_no = barkod_no;
+    }
+
+    public String getFiyat() {
+        return fiyat;
+    }
+
+    public void setFiyat(String fiyat) {
+        this.fiyat = fiyat;
+    }
+
+    public String getEtken_madde() {
+        return etken_madde;
+    }
+
+    public void setEtken_madde(String etken_madde) {
+        this.etken_madde = etken_madde;
     }
 }
 
