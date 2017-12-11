@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ilac.prospektus.ilacprojesi">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.ilac.prospektus.ilacprojesi.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,12 +22,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ilac.prospektus.ilacprojesi.etkenmaddeActivity"
+            android:name=".etkenmaddeActivity"
             android:label="@string/title_activity_etkenmadde"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.ilac.prospektus.ilacprojesi.endikasyonActivity"
+            android:name=".endikasyonActivity"
             android:label="@string/title_activity_endikasyon"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ilacDetay"
+            android:label="@string/title_activity_ilac_detay"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

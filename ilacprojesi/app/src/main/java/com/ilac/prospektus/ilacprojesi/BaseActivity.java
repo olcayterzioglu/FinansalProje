@@ -39,6 +39,7 @@ public class BaseActivity extends AppCompatActivity
             Intent j = new Intent(BaseActivity.this , endikasyonActivity.class );
             startActivity(j);
             finish();
+
         } else if (id == R.id.nav_cikis) {
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

@@ -43,6 +43,10 @@ public class Ilaclar {
 
     }
 
+    public Ilaclar(ilacDetay ilacDetay) {
+
+    }
+
     public Ilaclar() {
 
     }

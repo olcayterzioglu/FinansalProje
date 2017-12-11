@@ -1,5 +1,6 @@
 package com.ilac.prospektus.ilacprojesi;
 
+import android.content.Intent;
 import android.graphics.Movie;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -37,12 +39,15 @@ public class MainActivity extends BaseActivity {
     private String ilacAdi;
     ListView ilacList;
     ArrayList<String> arrayList = new ArrayList<>();
-    ArrayAdapter arrayAdapter;
+    ArrayList<String> arrayList_EtkenMadde = new ArrayList<>();
+    ArrayAdapter arrayAdapter, arrayAdapter_EtkenMadde;
 
+    String [][] ilacDetay_Dizi;
+    String [][] secilenIlacDetay_Dizi = new String[1][14];
+    int veriAdeti=0;
 
     //Search
     SearchView searchView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,8 @@ public class MainActivity extends BaseActivity {
         //Firebase veri listelemek için son
 
 
+
+        //search
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String text) {
@@ -80,6 +87,45 @@ public class MainActivity extends BaseActivity {
                 arrayAdapter.getFilter().filter(text);
 
                 return false;
+            }
+        });
+
+
+        ilacList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //listView da elemanlardan herhangi birine tıklandığında ne yapılmasını istiyorsak buraya kodlayacağız
+
+                String secilenIlacAdi = arrayAdapter.getItem(i).toString();
+                Toast.makeText(MainActivity.this,"secilenAd: " + secilenIlacAdi, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(MainActivity.this, ilacDetay.class);
+                Bundle mBundle = new Bundle();
+
+
+                //arrayList in içinde tüm ilaçların adı var
+                //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
+                //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
+                for (int k=0; k<veriAdeti; k++){
+                    if(ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
+                        for (int j=0; j<14; j++){
+                            secilenIlacDetay_Dizi[0][j] = ilacDetay_Dizi[k][j];
+                        }
+                    }
+                }
+
+
+                //Toast.makeText(MainActivity.this,secilenIlacDetay_Dizi[0][0].toString(), Toast.LENGTH_SHORT).show();
+
+                mBundle.putSerializable("gonderDizi", secilenIlacDetay_Dizi);
+                intent.putExtras(mBundle);
+
+
+                intent.putExtra("SecilenIlacAdi",secilenIlacAdi);
+                intent.putExtra("SecilenIlacEtkenMadde",arrayAdapter_EtkenMadde.getItem(i).toString());
+
+
+                startActivity(intent);
             }
         });
 
@@ -119,7 +165,7 @@ public class MainActivity extends BaseActivity {
         } );*/
 
         //Firebase veri ekleme
-        Ilaclar ilaclar = new Ilaclar("Glifor 1000 Mg 100 Film Tablet", "Bilim İlaç Sanayi ve Ticaret A.Ş.", "8699569090717", "13,86 TL", "Parasetamol + Kafein","Her kontrollü salımlı film tablette, 50 mg - 100 mg metoprolol tartarata eşdeğer 47.5 mg metoprolol suksinat bulunur.Boyar madde: Titanyum dioksit" , "", "Ağırlık hissi, ağrı ve gece gelen kramp gibi alt ekstremitelerin fonksiyonel ve organik kronik venöz yetersizliğine ait belirtilerin tedavisi ile hemoroid krizlerinin fonksiyonel belirtilerinin tedavisinde endikedir.","Formül bileşenlerinden herhangi birine karşı aşırı duyarlılık hallerinde kullanılmamalıdır.","Gebelik ve laktasyonda kullanılmamalıdır.Süt veren annelerde kullanılmamalıdır.","Bulantı ve kusma tarzında nonspesifik sindirimsel ve terleme gibi nörovejetatif.","" ,"Venöz yetersizliklerde: 1x2 tablet, Hemoroid krizlerinde: ilk 4 gün 6 tablet/gün, takibeden 3 gün 4 tablet/gün uygulanır. Sonraki günlerde 2 tabletle devam edilir." , "");
+        Ilaclar ilaclar = new Ilaclar("Olcay3", "Bilim İlaç Sanayi ve Ticaret A.Ş.", "8699569090717", "13,86 TL", "Parasetamol + Kafein","Her kontrollü salımlı film tablette, 50 mg - 100 mg metoprolol tartarata eşdeğer 47.5 mg metoprolol suksinat bulunur.Boyar madde: Titanyum dioksit" , "", "Ağırlık hissi, ağrı ve gece gelen kramp gibi alt ekstremitelerin fonksiyonel ve organik kronik venöz yetersizliğine ait belirtilerin tedavisi ile hemoroid krizlerinin fonksiyonel belirtilerinin tedavisinde endikedir.","Formül bileşenlerinden herhangi birine karşı aşırı duyarlılık hallerinde kullanılmamalıdır.","Gebelik ve laktasyonda kullanılmamalıdır.Süt veren annelerde kullanılmamalıdır.","Bulantı ve kusma tarzında nonspesifik sindirimsel ve terleme gibi nörovejetatif.","" ,"Venöz yetersizliklerde: 1x2 tablet, Hemoroid krizlerinde: ilk 4 gün 6 tablet/gün, takibeden 3 gün 4 tablet/gün uygulanır. Sonraki günlerde 2 tabletle devam edilir." , "");
 
         databaseReference.child("ilaclar").child(ilaclar.getAd()).setValue(ilaclar , new DatabaseReference.CompletionListener() {
 
@@ -135,7 +181,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
+    //Listeleme
     private void retrieveData(){
         firebase.addChildEventListener(new ChildEventListener() {
             @Override
@@ -165,19 +211,82 @@ public class MainActivity extends BaseActivity {
         });
     }
     private void getUpdates(DataSnapshot ds){
+
         arrayList.clear();
+        Ilaclar ilaclar = new Ilaclar();
 
         for(DataSnapshot data : ds.getChildren()){
-            Ilaclar ilaclar = new Ilaclar();
+
             ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
+            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
 
             arrayList.add(ilaclar.getAd());
+            arrayList_EtkenMadde.add((ilaclar.getEtken_madde()));
         }
+        veriAdeti = arrayList.size();
+        //tüm ilaç bilgilerini çekip çok boyutlu dizi içine atıyorum
+        ilacDetay_Dizi = new String[veriAdeti][14];
+        int art=0;
+        for(DataSnapshot data : ds.getChildren()){
+
+            ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
+            ilaclar.setFirma_adi(data.getValue(Ilaclar.class).getFirma_adi());
+            ilaclar.setBarkod_no(data.getValue(Ilaclar.class).getBarkod_no());
+            ilaclar.setFiyat(data.getValue(Ilaclar.class).getFiyat());
+            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
+
+            ilaclar.setFormul(data.getValue(Ilaclar.class).getFormul());
+            ilaclar.setFarmokolojik_ozellik(data.getValue(Ilaclar.class).getFarmokolojik_ozellik());
+            ilaclar.setEndikasyonlar(data.getValue(Ilaclar.class).getEndikasyonlar());
+            ilaclar.setKontrendikasyonlar(data.getValue(Ilaclar.class).getKontrendikasyonlar());
+            ilaclar.setUyarilar(data.getValue(Ilaclar.class).getUyarilar());
+
+            ilaclar.setYan_etkiler(data.getValue(Ilaclar.class).getYan_etkiler());
+            ilaclar.setEtkilesimler(data.getValue(Ilaclar.class).getEtkilesimler());
+            ilaclar.setKullanim_sekli(data.getValue(Ilaclar.class).getKullanim_sekli());
+            ilaclar.setDoz_asimi(data.getValue(Ilaclar.class).getDoz_asimi());
+
+
+            ilacDetay_Dizi[art][0]=ilaclar.getAd();
+            ilacDetay_Dizi[art][1]=ilaclar.getFirma_adi();
+            ilacDetay_Dizi[art][2]=ilaclar.getBarkod_no();
+            ilacDetay_Dizi[art][3]=ilaclar.getFiyat();
+            ilacDetay_Dizi[art][4]=ilaclar.getEtken_madde();
+
+            ilacDetay_Dizi[art][5]=ilaclar.getFormul();
+            ilacDetay_Dizi[art][6]=ilaclar.getFarmokolojik_ozellik();
+            ilacDetay_Dizi[art][7]=ilaclar.getEndikasyonlar();
+            ilacDetay_Dizi[art][8]=ilaclar.getKontrendikasyonlar();
+            ilacDetay_Dizi[art][9]=ilaclar.getUyarilar();
+
+            ilacDetay_Dizi[art][10]=ilaclar.getYan_etkiler();
+            ilacDetay_Dizi[art][11]=ilaclar.getEtkilesimler();
+            ilacDetay_Dizi[art][12]=ilaclar.getKullanim_sekli();
+            ilacDetay_Dizi[art][13]=ilaclar.getDoz_asimi();
+
+            //liste bitince çıkması için
+            art = art + 1;
+            if (art == veriAdeti){
+                break;
+            }
+        }
+
+
+
+
+
+
         if(arrayList.size()>0){
             arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList);
             ilacList.setAdapter(arrayAdapter);
         }else{
             Toast.makeText(MainActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
+        }
+        if(arrayList_EtkenMadde.size()>0){
+            arrayAdapter_EtkenMadde= new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList_EtkenMadde);
+
+        }else{
+            Toast.makeText(MainActivity.this, "Etken Madde Yok", Toast.LENGTH_SHORT).show();
         }
     }
 
