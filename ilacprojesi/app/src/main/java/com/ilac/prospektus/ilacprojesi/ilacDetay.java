@@ -48,35 +48,48 @@ public class ilacDetay extends BaseActivity{
         Bundle b = getIntent().getExtras();
         gelenIlacDetay_Dizi = (String[][])b.getSerializable("gonderDizi");
 
-        final TextView detay = (TextView)findViewById(R.id.textView5);
-        final TextView detay1 = (TextView)findViewById(R.id.textView6);
-        final TextView detay2 = (TextView)findViewById(R.id.textView7);
-        final TextView detay3 = (TextView)findViewById(R.id.textView8);
-        final TextView detay4 = (TextView)findViewById(R.id.textView9);
-        final TextView detay5 = (TextView)findViewById(R.id.textView10);
-        final TextView detay6 = (TextView)findViewById(R.id.textView11);
-        final TextView detay7 = (TextView)findViewById(R.id.textView12);
+        final TextView detay = (TextView)findViewById(R.id.textView);
+        final TextView detay1 = (TextView)findViewById(R.id.textView1);
+        final TextView detay2 = (TextView)findViewById(R.id.textView2);
+        final TextView detay3 = (TextView)findViewById(R.id.textView3);
+        final TextView detay4 = (TextView)findViewById(R.id.textView4);
+        final TextView detay5 = (TextView)findViewById(R.id.textView5);
+        final TextView detay6 = (TextView)findViewById(R.id.textView6);
+        final TextView detay7 = (TextView)findViewById(R.id.textView7);
+        final TextView detay8 = (TextView)findViewById(R.id.textView8);
+        final TextView detay9 = (TextView)findViewById(R.id.textView9);
+        final TextView detay10 = (TextView)findViewById(R.id.textView10);
+        final TextView detay11= (TextView)findViewById(R.id.textView11);
+        final TextView detay12 = (TextView)findViewById(R.id.textView12);
+        final TextView detay13 = (TextView)findViewById(R.id.textView13);
+
         ;
 
 
 
         //final Ilaclar ilaclar = new Ilaclar(this);
-        final TextView ad = (TextView)findViewById(R.id.ilacDetay_textView);
-        final TextView etkenMadde = (TextView)findViewById(R.id.ilacEtkenMadde_textView);
+//        final TextView ad = (TextView)findViewById(R.id.ilacDetay_textView);
+//        final TextView etkenMadde = (TextView)findViewById(R.id.ilacEtkenMadde_textView);
 
         //set data
-        ad.setText(gelenAd);
-        etkenMadde.setText(gelenEtkenMadde);
+//        ad.setText(gelenAd);
+//        etkenMadde.setText(gelenEtkenMadde);
 
 
-        detay.setText("Ad: " + gelenIlacDetay_Dizi[0][0]);
-        detay1.setText("Firma Adı: " + gelenIlacDetay_Dizi[0][1]);
-        detay2.setText("Barkod No: " + gelenIlacDetay_Dizi[0][2]);
-        detay3.setText("Fiyat: " + gelenIlacDetay_Dizi[0][3]);
-        detay4.setText("Etken Madde: " + gelenIlacDetay_Dizi[0][4]);
-        detay5.setText("Formul: " + gelenIlacDetay_Dizi[0][5]);
-        detay6.setText("Farmokolojik_ozellik: " + gelenIlacDetay_Dizi[0][6]);
-        detay7.setText("Endikasyonlar: " + gelenIlacDetay_Dizi[0][7]);
+        detay.setText("AD: \n" + gelenIlacDetay_Dizi[0][0]);
+        detay1.setText("FİRMA ADI: \n" + gelenIlacDetay_Dizi[0][1]);
+        detay2.setText("BARKOD NO: \n" + gelenIlacDetay_Dizi[0][2]);
+        detay3.setText("FİYAT: \n" + gelenIlacDetay_Dizi[0][3]);
+        detay4.setText("ETKEN MADDE: \n" + gelenIlacDetay_Dizi[0][4]);
+        detay5.setText("FORMÜL: \n" + gelenIlacDetay_Dizi[0][5]);
+        detay6.setText("FARMOKOLOJİK ÖZELLİKLER:\n " + gelenIlacDetay_Dizi[0][6]);
+        detay7.setText("ENDİKASYONLAR: \n" + gelenIlacDetay_Dizi[0][7]);
+        detay8.setText("KONTENDİKASYONLAR: \n" + gelenIlacDetay_Dizi[0][8]);
+        detay9.setText("UYARILAR: \n" + gelenIlacDetay_Dizi[0][9]);
+        detay10.setText("YAN ETKİLERİ: \n" + gelenIlacDetay_Dizi[0][10]);
+        detay11.setText("ETKİLEŞİMLER: \n" + gelenIlacDetay_Dizi[0][11]);
+        detay12.setText("KULLANIM ŞEKLİ: \n" + gelenIlacDetay_Dizi[0][12]);
+        detay13.setText("DOZ AŞIMI: \n" + gelenIlacDetay_Dizi[0][13]);
 
 
 

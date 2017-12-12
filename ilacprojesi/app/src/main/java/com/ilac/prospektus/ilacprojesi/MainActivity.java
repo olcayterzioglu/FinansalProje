@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity {
                 //listView da elemanlardan herhangi birine tıklandığında ne yapılmasını istiyorsak buraya kodlayacağız
 
                 String secilenIlacAdi = arrayAdapter.getItem(i).toString();
-                Toast.makeText(MainActivity.this,"secilenAd: " + secilenIlacAdi, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"Seçilen İlaç: " + secilenIlacAdi, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this, ilacDetay.class);
                 Bundle mBundle = new Bundle();
@@ -165,19 +165,19 @@ public class MainActivity extends BaseActivity {
         } );*/
 
         //Firebase veri ekleme
-        Ilaclar ilaclar = new Ilaclar("Olcay3", "Bilim İlaç Sanayi ve Ticaret A.Ş.", "8699569090717", "13,86 TL", "Parasetamol + Kafein","Her kontrollü salımlı film tablette, 50 mg - 100 mg metoprolol tartarata eşdeğer 47.5 mg metoprolol suksinat bulunur.Boyar madde: Titanyum dioksit" , "", "Ağırlık hissi, ağrı ve gece gelen kramp gibi alt ekstremitelerin fonksiyonel ve organik kronik venöz yetersizliğine ait belirtilerin tedavisi ile hemoroid krizlerinin fonksiyonel belirtilerinin tedavisinde endikedir.","Formül bileşenlerinden herhangi birine karşı aşırı duyarlılık hallerinde kullanılmamalıdır.","Gebelik ve laktasyonda kullanılmamalıdır.Süt veren annelerde kullanılmamalıdır.","Bulantı ve kusma tarzında nonspesifik sindirimsel ve terleme gibi nörovejetatif.","" ,"Venöz yetersizliklerde: 1x2 tablet, Hemoroid krizlerinde: ilk 4 gün 6 tablet/gün, takibeden 3 gün 4 tablet/gün uygulanır. Sonraki günlerde 2 tabletle devam edilir." , "");
-
-        databaseReference.child("ilaclar").child(ilaclar.getAd()).setValue(ilaclar , new DatabaseReference.CompletionListener() {
-
-            @Override
-            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                if(databaseError != null)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Kaydedildi", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            }
-        } );
+//        Ilaclar ilaclar = new Ilaclar("Olcay3", "Bilim İlaç Sanayi ve Ticaret A.Ş.", "8699569090717", "13,86 TL", "Parasetamol + Kafein","Her kontrollü salımlı film tablette, 50 mg - 100 mg metoprolol tartarata eşdeğer 47.5 mg metoprolol suksinat bulunur.Boyar madde: Titanyum dioksit" , "", "Ağırlık hissi, ağrı ve gece gelen kramp gibi alt ekstremitelerin fonksiyonel ve organik kronik venöz yetersizliğine ait belirtilerin tedavisi ile hemoroid krizlerinin fonksiyonel belirtilerinin tedavisinde endikedir.","Formül bileşenlerinden herhangi birine karşı aşırı duyarlılık hallerinde kullanılmamalıdır.","Gebelik ve laktasyonda kullanılmamalıdır.Süt veren annelerde kullanılmamalıdır.","Bulantı ve kusma tarzında nonspesifik sindirimsel ve terleme gibi nörovejetatif.","" ,"Venöz yetersizliklerde: 1x2 tablet, Hemoroid krizlerinde: ilk 4 gün 6 tablet/gün, takibeden 3 gün 4 tablet/gün uygulanır. Sonraki günlerde 2 tabletle devam edilir." , "");
+//
+//        databaseReference.child("ilaclar").child(ilaclar.getAd()).setValue(ilaclar , new DatabaseReference.CompletionListener() {
+//
+//            @Override
+//            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+//                if(databaseError != null)
+//                {
+//                    Toast toast = Toast.makeText(getApplicationContext(), "Kaydedildi", Toast.LENGTH_LONG);
+//                    toast.show();
+//                }
+//            }
+//        } );
 
     }
 
