@@ -12,8 +12,37 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.ArrayList;
+
 
 public class etkenmaddeActivity extends BaseActivity{
+
+    final static String DB_URL = "https://ilac-prospektus.firebaseio.com/";
+    Firebase firebase;
+    ListView ilacList;
+    Button etkenSearchButon;
+    EditText etkenGir;
+    ArrayList<String> arrayList = new ArrayList<>();
+    ArrayList<String> arrayList_EtkenMadde = new ArrayList<>();
+    ArrayAdapter arrayAdapter, arrayAdapter_EtkenMadde;
+
+
+    String [][] ilacDetay_Dizi;
+    String [][] secilenIlacDetay_Dizi = new String[1][14];
+
+    int veriAdeti=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +50,84 @@ public class etkenmaddeActivity extends BaseActivity{
         setContentView(R.layout.activity_etkenmadde);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
+
+        etkenGir= (EditText)(findViewById(R.id.txtArama1)) ;
+        ilacList = (ListView) findViewById(R.id.ilaclar_ListView);
+        etkenSearchButon = (Button) findViewById(R.id.araEtkenButon);
+
+        //Firebase veri listelemek için
+        Firebase.setAndroidContext(this);
+        firebase = new Firebase(DB_URL);
+        ilacList = (ListView) findViewById(R.id.ilaclar_ListView);
+        this.retrieveData();
+        //Firebase veri listelemek için son
+
+
+
+        etkenSearchButon.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v ){
+
+
+                arrayList.clear();
+
+
+
+                arrayAdapter_EtkenMadde.getFilter().filter(etkenGir.getText());
+
+
+                //arrayList in içinde tüm ilaçların adı var
+                //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
+                //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
+
+               for (int k=0; k<arrayAdapter_EtkenMadde.getCount(); k++){
+
+
+                   String secilenEtkenMadde = arrayAdapter_EtkenMadde.getItem(k).toString();
+
+                    for (int i=0; i<veriAdeti; i++) {
+
+                       if (ilacDetay_Dizi[i][4].equals(secilenEtkenMadde)) {
+
+
+
+
+                               arrayList.add( ilacDetay_Dizi[i][0] );
+
+
+
+
+                       }
+
+                    }
+
+
+               }
+
+
+
+                if(arrayList.size()>0){
+                arrayAdapter = new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayList);
+                 ilacList.setAdapter(arrayAdapter);
+                }else{
+                 Toast.makeText(etkenmaddeActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
+                 }
+
+
+
+            }
+        });
+
+
+
+
+
+
+
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -43,7 +150,223 @@ public class etkenmaddeActivity extends BaseActivity{
         navigationView.setNavigationItemSelectedListener(this);
 
 
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //Listeleme
+    private void retrieveData(){
+        firebase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                getUpdates(dataSnapshot);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                getUpdates(dataSnapshot);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+    private void getUpdates(DataSnapshot ds){
+
+        arrayList.clear();
+        Ilaclar ilaclar = new Ilaclar();
+
+        for(DataSnapshot data : ds.getChildren()){
+
+            ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
+            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
+
+            arrayList.add(ilaclar.getAd());
+            arrayList_EtkenMadde.add((ilaclar.getEtken_madde()));
+        }
+        veriAdeti = arrayList.size();
+        //tüm ilaç bilgilerini çekip çok boyutlu dizi içine atıyorum
+        ilacDetay_Dizi = new String[veriAdeti][14];
+        int art=0;
+        for(DataSnapshot data : ds.getChildren()){
+
+            ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
+            ilaclar.setFirma_adi(data.getValue(Ilaclar.class).getFirma_adi());
+            ilaclar.setBarkod_no(data.getValue(Ilaclar.class).getBarkod_no());
+            ilaclar.setFiyat(data.getValue(Ilaclar.class).getFiyat());
+            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
+
+            ilaclar.setFormul(data.getValue(Ilaclar.class).getFormul());
+            ilaclar.setFarmokolojik_ozellik(data.getValue(Ilaclar.class).getFarmokolojik_ozellik());
+            ilaclar.setEndikasyonlar(data.getValue(Ilaclar.class).getEndikasyonlar());
+            ilaclar.setKontrendikasyonlar(data.getValue(Ilaclar.class).getKontrendikasyonlar());
+            ilaclar.setUyarilar(data.getValue(Ilaclar.class).getUyarilar());
+
+            ilaclar.setYan_etkiler(data.getValue(Ilaclar.class).getYan_etkiler());
+            ilaclar.setEtkilesimler(data.getValue(Ilaclar.class).getEtkilesimler());
+            ilaclar.setKullanim_sekli(data.getValue(Ilaclar.class).getKullanim_sekli());
+            ilaclar.setDoz_asimi(data.getValue(Ilaclar.class).getDoz_asimi());
+
+
+            ilacDetay_Dizi[art][0]=ilaclar.getAd();
+            ilacDetay_Dizi[art][1]=ilaclar.getFirma_adi();
+            ilacDetay_Dizi[art][2]=ilaclar.getBarkod_no();
+            ilacDetay_Dizi[art][3]=ilaclar.getFiyat();
+            ilacDetay_Dizi[art][4]=ilaclar.getEtken_madde();
+
+            ilacDetay_Dizi[art][5]=ilaclar.getFormul();
+            ilacDetay_Dizi[art][6]=ilaclar.getFarmokolojik_ozellik();
+            ilacDetay_Dizi[art][7]=ilaclar.getEndikasyonlar();
+            ilacDetay_Dizi[art][8]=ilaclar.getKontrendikasyonlar();
+            ilacDetay_Dizi[art][9]=ilaclar.getUyarilar();
+
+            ilacDetay_Dizi[art][10]=ilaclar.getYan_etkiler();
+            ilacDetay_Dizi[art][11]=ilaclar.getEtkilesimler();
+            ilacDetay_Dizi[art][12]=ilaclar.getKullanim_sekli();
+            ilacDetay_Dizi[art][13]=ilaclar.getDoz_asimi();
+
+            //liste bitince çıkması için
+            art = art + 1;
+            if (art == veriAdeti){
+                break;
+            }
+        }
+
+
+
+
+
+
+        //if(arrayList.size()>0){
+            //arrayAdapter = new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayList);
+           // ilacList.setAdapter(arrayAdapter);
+        //}else{
+           // Toast.makeText(etkenmaddeActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
+      //  }
+        if(arrayList_EtkenMadde.size()>0){
+            arrayAdapter_EtkenMadde= new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayList_EtkenMadde);
+            ilacList.setAdapter(arrayAdapter_EtkenMadde);
+
+        }else{
+            Toast.makeText(etkenmaddeActivity.this, "Etken Madde Yok", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public void onBackPressed() {
