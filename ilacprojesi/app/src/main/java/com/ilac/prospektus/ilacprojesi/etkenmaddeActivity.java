@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,6 +68,8 @@ public class etkenmaddeActivity extends BaseActivity{
 
 
 
+//Search butonuna tıklanıldığında yapılacaklar
+
         etkenSearchButon.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -75,30 +78,27 @@ public class etkenmaddeActivity extends BaseActivity{
 
                 arrayList.clear();
 
+                //arrayAdapter_EtkenMadde in içinde tüm ilaçların etken maddeleri var
+
+                //Girilen etken maddeye göre ilaç etken maddelerini filtreledim
+
+                //Eğer ilaç o etken maddeyi içeriyor ise adı arrayListe eklenecek en son arrayList görüntülenecek
 
 
                 arrayAdapter_EtkenMadde.getFilter().filter(etkenGir.getText());
 
 
-                //arrayList in içinde tüm ilaçların adı var
-                //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
-                //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
-
                for (int k=0; k<arrayAdapter_EtkenMadde.getCount(); k++){
-
 
                    String secilenEtkenMadde = arrayAdapter_EtkenMadde.getItem(k).toString();
 
-                    for (int i=0; i<veriAdeti; i++) {
+                    for (int i=0; i<veriAdeti; i++)
+                    {
 
                        if (ilacDetay_Dizi[i][4].equals(secilenEtkenMadde)) {
 
 
-
-
                                arrayList.add( ilacDetay_Dizi[i][0] );
-
-
 
 
                        }
@@ -108,19 +108,36 @@ public class etkenmaddeActivity extends BaseActivity{
 
                }
 
-
+//Girilen etken maddeyi içeren ilaç var ise o ilacın adını listeye ekle
 
                 if(arrayList.size()>0){
                 arrayAdapter = new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayList);
                  ilacList.setAdapter(arrayAdapter);
                 }else{
-                 Toast.makeText(etkenmaddeActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(etkenmaddeActivity.this, "Girilen etken maddeyi içeren ilaç bulunamadı", Toast.LENGTH_SHORT).show();
                  }
-
-
 
             }
         });
+
+//Search butonuna tıklanıldığında yapılacaklar sonu
+
+
+
+
+
+
+        //Listview item tıklandığında
+
+
+
+
+
+
+
+        //Listview item tıklandığında sonu
+        
+
 
 
 
@@ -155,13 +172,7 @@ public class etkenmaddeActivity extends BaseActivity{
 
 
 
-
-
     }
-
-
-
-
 
 
 
@@ -218,18 +229,36 @@ public class etkenmaddeActivity extends BaseActivity{
     }
     private void getUpdates(DataSnapshot ds){
 
+
         arrayList.clear();
         Ilaclar ilaclar = new Ilaclar();
 
-        for(DataSnapshot data : ds.getChildren()){
+        for(DataSnapshot data : ds.getChildren()) {
 
             ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
             ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
 
             arrayList.add(ilaclar.getAd());
+
+
+            //İlaçların etken maddelerini arrayList_EtkenMadde ye ekliyorum
+            //Aynı etken maddeden var ise ekleme yapmayacak
+
+
+            if (arrayList_EtkenMadde.contains(ilaclar.getEtken_madde()) == false)
+
+            {
+
             arrayList_EtkenMadde.add((ilaclar.getEtken_madde()));
+
+            }
+
         }
+
+
+
         veriAdeti = arrayList.size();
+
         //tüm ilaç bilgilerini çekip çok boyutlu dizi içine atıyorum
         ilacDetay_Dizi = new String[veriAdeti][14];
         int art=0;
@@ -271,13 +300,12 @@ public class etkenmaddeActivity extends BaseActivity{
             ilacDetay_Dizi[art][13]=ilaclar.getDoz_asimi();
 
             //liste bitince çıkması için
+
             art = art + 1;
             if (art == veriAdeti){
                 break;
             }
         }
-
-
 
 
 
@@ -288,9 +316,13 @@ public class etkenmaddeActivity extends BaseActivity{
         //}else{
            // Toast.makeText(etkenmaddeActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
       //  }
+
+
+        //arrayAdapter_EtkenMadde ye arrayLis_EtkenMaddeyi doldruruyorum
+
         if(arrayList_EtkenMadde.size()>0){
             arrayAdapter_EtkenMadde= new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayList_EtkenMadde);
-            ilacList.setAdapter(arrayAdapter_EtkenMadde);
+            //ilacList.setAdapter(arrayAdapter_EtkenMadde);
 
         }else{
             Toast.makeText(etkenmaddeActivity.this, "Etken Madde Yok", Toast.LENGTH_SHORT).show();
