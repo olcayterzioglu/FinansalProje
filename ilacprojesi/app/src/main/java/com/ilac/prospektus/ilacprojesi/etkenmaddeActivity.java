@@ -15,8 +15,9 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -31,12 +32,14 @@ public class etkenmaddeActivity extends BaseActivity{
 
     final static String DB_URL = "https://ilac-prospektus.firebaseio.com/";
     Firebase firebase;
-    ListView ilacList;
-    Button etkenSearchButon;
-    EditText etkenGir;
-    ArrayList<String> arrayList = new ArrayList<>();
+    ListView ilacList,ilacListMadde;
+    TextView bilgi;
+    SearchView searchViewMadde;
+    ArrayList<String> arrayListAd = new ArrayList<>();
+
+    ArrayList<String> arrayList_Madde = new ArrayList<>();
     ArrayList<String> arrayList_EtkenMadde = new ArrayList<>();
-    ArrayAdapter arrayAdapter, arrayAdapter_EtkenMadde;
+    ArrayAdapter arrayAdapter, arrayAdapter_EtkenMadde,arrayAdapter_Madde;
 
 
     String [][] ilacDetay_Dizi;
@@ -47,6 +50,7 @@ public class etkenmaddeActivity extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_etkenmadde);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,9 +59,11 @@ public class etkenmaddeActivity extends BaseActivity{
 
 
 
-        etkenGir= (EditText)(findViewById(R.id.txtArama1)) ;
-        ilacList = (ListView) findViewById(R.id.ilaclar_ListView);
-        etkenSearchButon = (Button) findViewById(R.id.araEtkenButon);
+
+        searchViewMadde =(SearchView) findViewById(R.id.searchView1);
+        ilacListMadde = (ListView) findViewById(R.id.ilaclar_ListViewMadde);
+        bilgi=(TextView) (findViewById(R.id.textviewMadde));
+
 
         //Firebase veri listelemek için
         Firebase.setAndroidContext(this);
@@ -68,59 +74,77 @@ public class etkenmaddeActivity extends BaseActivity{
 
 
 
-//Search butonuna tıklanıldığında yapılacaklar
 
-        etkenSearchButon.setOnClickListener(new View.OnClickListener(){
 
+
+
+
+        //ListviewMadde item tıklandığında
+
+        ilacListMadde.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v ){
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                ilacList.clearAnimation();
+
+                String secilenMadde = arrayAdapter_Madde.getItem(i).toString();
+
+                arrayListAd.clear();
+
+                //arrayAdapter_Madde in içinde tüm ilaçların etken maddeleri var veri tekrarı olmadan
 
 
-                arrayList.clear();
-
-                //arrayAdapter_EtkenMadde in içinde tüm ilaçların etken maddeleri var
-
-                //Girilen etken maddeye göre ilaç etken maddelerini filtreledim
-
-                //Eğer ilaç o etken maddeyi içeriyor ise adı arrayListe eklenecek en son arrayList görüntülenecek
+                //Eğer ilaç o etken maddeyi içeriyor ise adı arrayList e eklenecek en son arrayList görüntülenecek
 
 
-                arrayAdapter_EtkenMadde.getFilter().filter(etkenGir.getText());
 
-
-               for (int k=0; k<arrayAdapter_EtkenMadde.getCount(); k++){
-
-                   String secilenEtkenMadde = arrayAdapter_EtkenMadde.getItem(k).toString();
-
-                    for (int i=0; i<veriAdeti; i++)
+                    for (int z=0; z<veriAdeti; z++)
                     {
 
-                       if (ilacDetay_Dizi[i][4].equals(secilenEtkenMadde)) {
+                        if ( ilacDetay_Dizi[z][4].contains(secilenMadde)) {
 
 
-                               arrayList.add( ilacDetay_Dizi[i][0] );
+
+                            arrayListAd.add( ilacDetay_Dizi[z][0] );
 
 
-                       }
+                        }
 
                     }
 
 
-               }
 
-//Girilen etken maddeyi içeren ilaç var ise o ilacın adını listeye ekle
 
-                if(arrayList.size()>0){
-                arrayAdapter = new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayList);
-                 ilacList.setAdapter(arrayAdapter);
+
+//Girilen etken maddeyi içeren ilaç var ise o ilacların listesini listview a  ekle
+
+                if(arrayListAd.size()>0){
+                    arrayAdapter = new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayListAd);
+                    ilacList.setAdapter(arrayAdapter);
                 }else{
-                 Toast.makeText(etkenmaddeActivity.this, "Girilen etken maddeyi içeren ilaç bulunamadı", Toast.LENGTH_SHORT).show();
-                 }
+                    Toast.makeText(etkenmaddeActivity.this, "Girilen etken maddeyi içeren ilaç bulunamadı", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+                bilgi.setText(secilenMadde+"  "+"içeren ilaçlar");
+                bilgi.setVisibility(View.VISIBLE);
+                ilacList.setVisibility(View.VISIBLE);
+                ilacListMadde.setVisibility(View.INVISIBLE);
+
 
             }
+
         });
 
-//Search butonuna tıklanıldığında yapılacaklar sonu
+
+
+        //ListviewMadde item tıklandığında sonu
+
+
+
+
+
 
 
 
@@ -135,8 +159,44 @@ public class etkenmaddeActivity extends BaseActivity{
 
 
 
+
+
+
         //Listview item tıklandığında sonu
-        
+
+
+
+
+
+
+
+        //searchview işlemleri
+
+        searchViewMadde.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String text) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+
+                arrayAdapter_Madde.getFilter().filter(text);
+                ilacListMadde.setVisibility(View.VISIBLE);
+                bilgi.setVisibility(View.INVISIBLE);
+                ilacList.setVisibility(View.INVISIBLE);
+
+
+
+                return false;
+            }
+        });
+
+
+
+
+        //searchview işlemleri sonu
+
 
 
 
@@ -230,7 +290,10 @@ public class etkenmaddeActivity extends BaseActivity{
     private void getUpdates(DataSnapshot ds){
 
 
-        arrayList.clear();
+        arrayListAd.clear();
+        arrayList_Madde.clear();
+        arrayList_EtkenMadde.clear();
+
         Ilaclar ilaclar = new Ilaclar();
 
         for(DataSnapshot data : ds.getChildren()) {
@@ -238,7 +301,7 @@ public class etkenmaddeActivity extends BaseActivity{
             ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
             ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
 
-            arrayList.add(ilaclar.getAd());
+            arrayListAd.add(ilaclar.getAd());
 
 
             //İlaçların etken maddelerini arrayList_EtkenMadde ye ekliyorum
@@ -251,13 +314,36 @@ public class etkenmaddeActivity extends BaseActivity{
 
             arrayList_EtkenMadde.add((ilaclar.getEtken_madde()));
 
+
+            //Etken maddeleri ayrıştırarak veri tekrarını yok edip etken madde listesi oluşturdum
+
+                String maddeler = ilaclar.getEtken_madde().toString();
+                String[] parts = maddeler.split(",");
+
+                for (int i=0; i<parts.length; i++)
+                {
+
+                   if( arrayList_Madde.contains(parts[i])==false)
+
+                   {
+
+                       arrayList_Madde.add(parts[i]);
+                   }
+
+                    }
+
+
+
+
+
+
             }
 
         }
 
 
 
-        veriAdeti = arrayList.size();
+        veriAdeti = arrayListAd.size();
 
         //tüm ilaç bilgilerini çekip çok boyutlu dizi içine atıyorum
         ilacDetay_Dizi = new String[veriAdeti][14];
@@ -327,6 +413,17 @@ public class etkenmaddeActivity extends BaseActivity{
         }else{
             Toast.makeText(etkenmaddeActivity.this, "Etken Madde Yok", Toast.LENGTH_SHORT).show();
         }
+
+
+        if(arrayList_Madde.size()>0){
+            arrayAdapter_Madde= new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayList_Madde);
+            ilacListMadde.setAdapter(arrayAdapter_Madde);
+
+        }else{
+            Toast.makeText(etkenmaddeActivity.this, "Madde Yok", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 
