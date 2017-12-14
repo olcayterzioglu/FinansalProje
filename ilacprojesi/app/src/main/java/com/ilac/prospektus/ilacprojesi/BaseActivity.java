@@ -40,7 +40,12 @@ public class BaseActivity extends AppCompatActivity
             startActivity(j);
             finish();
 
-        } else if (id == R.id.nav_cikis) {
+        } else if (id == R.id.nav_hakkimizda) {
+            Intent o = new Intent(BaseActivity.this , hakkimizdaActivity.class );
+            startActivity(o);
+            finish();
+
+        }else if (id == R.id.nav_cikis) {
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

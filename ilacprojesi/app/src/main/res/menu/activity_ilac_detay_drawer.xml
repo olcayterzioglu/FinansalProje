@@ -18,10 +18,13 @@
             android:icon="@mipmap/ic_content_paste_black_24dp"
             android:title="@string/endikasyonBilgIlaclar" />
         <item
+            android:id="@+id/nav_hakkimizda"
+            android:icon="@mipmap/ic_group_black_24dp"
+            android:title="@string/hakkimizda" />
+        <item
             android:id="@+id/nav_cikis"
             android:icon="@mipmap/ic_exit_to_app_black_24dp"
             android:title="@string/cikis" />
-
     </group>
 
 </menu>

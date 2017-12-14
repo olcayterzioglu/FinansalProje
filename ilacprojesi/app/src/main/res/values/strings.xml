@@ -10,12 +10,14 @@
     <string name="cikis">Çıkış</string>
     <string name="etkenMaddeIlaclar">Etken Maddesine Göre İlaçlar</string>
     <string name="endikasyonBilgIlaclar">Endikasyon Bilgi. Göre İlaçlar</string>
+    <string name="hakkimizda">Hakkımızda</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_etkenmadde">Etken Madde</string>
     <string name="title_activity_endikasyon">Endikasyon Bilgisine Göre</string>
     <string name="title_activity_ilac_detay">ilacDetay</string>
+    <string name="title_activity_hakkimizda">Hakkımızda</string>
 
 
 </resources>

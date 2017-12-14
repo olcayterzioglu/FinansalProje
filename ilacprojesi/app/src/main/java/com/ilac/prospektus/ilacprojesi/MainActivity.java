@@ -97,11 +97,9 @@ public class MainActivity extends BaseActivity {
                 //listView da elemanlardan herhangi birine tıklandığında ne yapılmasını istiyorsak buraya kodlayacağız
 
                 String secilenIlacAdi = arrayAdapter.getItem(i).toString();
-                Toast.makeText(MainActivity.this,"Seçilen İlaç: " + secilenIlacAdi, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this, ilacDetay.class).putExtra("from" , "main");
                 Bundle mBundle = new Bundle();
-
 
                 //arrayList in içinde tüm ilaçların adı var
                 //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
@@ -114,28 +112,12 @@ public class MainActivity extends BaseActivity {
                     }
                 }
 
-
-                //Toast.makeText(MainActivity.this,secilenIlacDetay_Dizi[0][0].toString(), Toast.LENGTH_SHORT).show();
-
                 mBundle.putSerializable("gonderDizi", secilenIlacDetay_Dizi);
                 intent.putExtras(mBundle);
-
-
-                intent.putExtra("SecilenIlacAdi",secilenIlacAdi);
-                intent.putExtra("SecilenIlacEtkenMadde",arrayAdapter_EtkenMadde.getItem(i).toString());
-
 
                 startActivity(intent);
             }
         });
-
-
-
-
-
-
-
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -147,22 +129,6 @@ public class MainActivity extends BaseActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
-        /*
-        Ilaclar ilaclar = new Ilaclar("A-ferin","parasetamol" , "agri kesici", "grip","duyarlilik","tablet","gormek","athis" ,"12yas" , "doz");
-
-        databaseReference.child("ilaclar").child("C").child(ilaclar.getAd()).setValue(ilaclar , new DatabaseReference.CompletionListener() {
-
-            @Override
-            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                if(databaseError != null)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Kaydedildi", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            }
-        } );*/
 
         //Firebase veri ekleme
 //        Ilaclar ilaclar = new Ilaclar("Olcay3", "Bilim İlaç Sanayi ve Ticaret A.Ş.", "8699569090717", "13,86 TL", "Parasetamol + Kafein","Her kontrollü salımlı film tablette, 50 mg - 100 mg metoprolol tartarata eşdeğer 47.5 mg metoprolol suksinat bulunur.Boyar madde: Titanyum dioksit" , "", "Ağırlık hissi, ağrı ve gece gelen kramp gibi alt ekstremitelerin fonksiyonel ve organik kronik venöz yetersizliğine ait belirtilerin tedavisi ile hemoroid krizlerinin fonksiyonel belirtilerinin tedavisinde endikedir.","Formül bileşenlerinden herhangi birine karşı aşırı duyarlılık hallerinde kullanılmamalıdır.","Gebelik ve laktasyonda kullanılmamalıdır.Süt veren annelerde kullanılmamalıdır.","Bulantı ve kusma tarzında nonspesifik sindirimsel ve terleme gibi nörovejetatif.","" ,"Venöz yetersizliklerde: 1x2 tablet, Hemoroid krizlerinde: ilk 4 gün 6 tablet/gün, takibeden 3 gün 4 tablet/gün uygulanır. Sonraki günlerde 2 tabletle devam edilir." , "");
@@ -270,11 +236,6 @@ public class MainActivity extends BaseActivity {
                 break;
             }
         }
-
-
-
-
-
 
         if(arrayList.size()>0){
             arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList);

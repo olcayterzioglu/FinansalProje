@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/pillsicon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -32,6 +32,10 @@
         <activity
             android:name=".ilacDetay"
             android:label="@string/title_activity_ilac_detay"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".hakkimizdaActivity"
+            android:label="@string/title_activity_hakkimizda"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

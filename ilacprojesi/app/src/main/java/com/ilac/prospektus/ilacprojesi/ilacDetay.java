@@ -17,10 +17,7 @@ import android.widget.TextView;
 
 public class ilacDetay extends BaseActivity{
 
-    String gelenAd, gelenEtkenMadde;
-
     String [][] gelenIlacDetay_Dizi;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +39,6 @@ public class ilacDetay extends BaseActivity{
 
         //Gelen veri çek
         Intent intent = getIntent();
-        gelenAd = intent.getStringExtra("SecilenIlacAdi");
-        gelenEtkenMadde = intent.getStringExtra("SecilenIlacEtkenMadde");
 
         Bundle b = getIntent().getExtras();
         gelenIlacDetay_Dizi = (String[][])b.getSerializable("gonderDizi");
@@ -63,19 +58,6 @@ public class ilacDetay extends BaseActivity{
         final TextView detay12 = (TextView)findViewById(R.id.textView25);
         final TextView detay13 = (TextView)findViewById(R.id.textView26);
 
-        ;
-
-
-
-        //final Ilaclar ilaclar = new Ilaclar(this);
-//        final TextView ad = (TextView)findViewById(R.id.ilacDetay_textView);
-//        final TextView etkenMadde = (TextView)findViewById(R.id.ilacEtkenMadde_textView);
-
-        //set data
-//        ad.setText(gelenAd);
-//        etkenMadde.setText(gelenEtkenMadde);
-
-
         detay.setText( gelenIlacDetay_Dizi[0][0]);
         detay1.setText(gelenIlacDetay_Dizi[0][1]);
         detay2.setText(gelenIlacDetay_Dizi[0][2]);
@@ -90,9 +72,6 @@ public class ilacDetay extends BaseActivity{
         detay11.setText(gelenIlacDetay_Dizi[0][11]);
         detay12.setText(gelenIlacDetay_Dizi[0][12]);
         detay13.setText(gelenIlacDetay_Dizi[0][13]);
-
-
-
 
     }
 

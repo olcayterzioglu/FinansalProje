@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_anasayfa"
@@ -25,8 +24,6 @@
             android:id="@+id/nav_cikis"
             android:icon="@mipmap/ic_exit_to_app_black_24dp"
             android:title="@string/cikis" />
-
     </group>
 
 </menu>
-
