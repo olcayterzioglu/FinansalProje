@@ -40,6 +40,11 @@ public class BaseActivity extends AppCompatActivity
             startActivity(j);
             finish();
 
+        } else if (id == R.id.nav_barkod) {
+            Intent k = new Intent(BaseActivity.this , barkodActivity.class );
+            startActivity(k);
+            finish();
+
         } else if (id == R.id.nav_hakkimizda) {
             Intent o = new Intent(BaseActivity.this , hakkimizdaActivity.class );
             startActivity(o);

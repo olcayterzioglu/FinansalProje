@@ -18,6 +18,7 @@
     <string name="title_activity_endikasyon">Endikasyon Bilgisine Göre</string>
     <string name="title_activity_ilac_detay">ilacDetay</string>
     <string name="title_activity_hakkimizda">Hakkımızda</string>
+    <string name="title_activity_barkod">Barkod Numarasına Göre</string>
 
 
 </resources>
