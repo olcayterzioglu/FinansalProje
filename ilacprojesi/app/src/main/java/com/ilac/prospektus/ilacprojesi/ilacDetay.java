@@ -22,6 +22,7 @@ public class ilacDetay extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ilac_detay);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -62,7 +63,20 @@ public class ilacDetay extends BaseActivity{
         detay1.setText(gelenIlacDetay_Dizi[0][1]);
         detay2.setText(gelenIlacDetay_Dizi[0][2]);
         detay3.setText(gelenIlacDetay_Dizi[0][3]);
-        detay4.setText(gelenIlacDetay_Dizi[0][4]);
+        String etkenler = gelenIlacDetay_Dizi[0][4];
+        String etken="";
+        String[] parts = etkenler.split(",");
+
+        for (int i=0; i<parts.length; i++)
+        {
+           if(i==0)  { etken = etken + parts[i];  }
+
+
+               else { etken = etken +"+" +parts[i];   }
+
+        }
+
+        detay4.setText(etken);
         detay5.setText(gelenIlacDetay_Dizi[0][5]);
         detay6.setText(gelenIlacDetay_Dizi[0][6]);
         detay7.setText(gelenIlacDetay_Dizi[0][7]);
@@ -93,6 +107,18 @@ public class ilacDetay extends BaseActivity{
             }
             if(getIntent().getStringExtra("from").equals("endikasyon")) {
                 Intent i = new Intent(ilacDetay.this , endikasyonActivity.class);
+                startActivity(i);
+                finish();
+            }
+
+            if(getIntent().getStringExtra("from").equals("barkod")) {
+                Intent i = new Intent(ilacDetay.this , barkodActivity.class);
+                startActivity(i);
+                finish();
+            }
+
+            if(getIntent().getStringExtra("from").equals("firma")) {
+                Intent i = new Intent(ilacDetay.this , hakkimizdaActivity.class);
                 startActivity(i);
                 finish();
             }

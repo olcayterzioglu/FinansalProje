@@ -3,7 +3,6 @@ package com.ilac.prospektus.ilacprojesi;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -27,6 +25,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
+
 
 
 public class etkenmaddeActivity extends BaseActivity{
@@ -101,13 +100,14 @@ public class etkenmaddeActivity extends BaseActivity{
                 if(arrayListAd.size()>0){
                     arrayAdapter = new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayListAd);
                     ilacList.setAdapter(arrayAdapter);
+                    bilgi.setText(secilenMadde+" "+"içeren ilaçlar");
+                    bilgi.setVisibility(View.VISIBLE);
+                    ilacList.setVisibility(View.VISIBLE);
                 }else{
                     Toast.makeText(etkenmaddeActivity.this, "Girilen etken maddeyi içeren ilaç bulunamadı", Toast.LENGTH_SHORT).show();
                 }
 
-                bilgi.setText(secilenMadde+" "+"içeren ilaçlar");
-                bilgi.setVisibility(View.VISIBLE);
-                ilacList.setVisibility(View.VISIBLE);
+
                 ilacListMadde.setVisibility(View.INVISIBLE);
 
             }
@@ -115,7 +115,6 @@ public class etkenmaddeActivity extends BaseActivity{
         });
 
         //ListviewMadde item tıklandığında sonu
-
 
 
         //Listview item tıklandığında
@@ -154,8 +153,6 @@ public class etkenmaddeActivity extends BaseActivity{
 
 
 
-
-
         //searchview işlemleri
 
         searchViewMadde.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -180,17 +177,6 @@ public class etkenmaddeActivity extends BaseActivity{
         //searchview işlemleri sonu
 
 
-
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -318,12 +304,6 @@ public class etkenmaddeActivity extends BaseActivity{
             }
         }
 
-        //if(arrayList.size()>0){
-            //arrayAdapter = new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayList);
-           // ilacList.setAdapter(arrayAdapter);
-        //}else{
-           // Toast.makeText(etkenmaddeActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
-      //  }
 
 
         //arrayAdapter_EtkenMadde ye arrayLis_EtkenMaddeyi doldruruyorum
@@ -342,7 +322,7 @@ public class etkenmaddeActivity extends BaseActivity{
             ilacListMadde.setAdapter(arrayAdapter_Madde);
 
         }else{
-            Toast.makeText(etkenmaddeActivity.this, "Madde Yok", Toast.LENGTH_SHORT).show();
+            Toast.makeText(etkenmaddeActivity.this, "Etken Madde Yok", Toast.LENGTH_SHORT).show();
         }
 
 
