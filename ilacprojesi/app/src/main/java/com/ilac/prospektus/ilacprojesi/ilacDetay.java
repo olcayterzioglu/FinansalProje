@@ -103,9 +103,15 @@ public class ilacDetay extends BaseActivity{
             drawer.closeDrawer(GravityCompat.START);
         } else {
             //super.onBackPressed();
-            Intent i = new Intent(ilacDetay.this , MainActivity.class );
-            startActivity(i);
-            finish();
+            if(getIntent().getStringExtra("from").equals("main")){
+                Intent i = new Intent(ilacDetay.this , MainActivity.class);
+                startActivity(i);
+                finish();}
+            if(getIntent().getStringExtra("from").equals("etkenmadde")) {
+                Intent i = new Intent(ilacDetay.this , etkenmaddeActivity.class);
+                startActivity(i);
+                finish();
+            }
         }
     }
 

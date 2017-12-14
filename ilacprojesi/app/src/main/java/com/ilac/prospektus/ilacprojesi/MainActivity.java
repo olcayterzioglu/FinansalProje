@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity {
                 String secilenIlacAdi = arrayAdapter.getItem(i).toString();
                 Toast.makeText(MainActivity.this,"Seçilen İlaç: " + secilenIlacAdi, Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(MainActivity.this, ilacDetay.class);
+                Intent intent = new Intent(MainActivity.this, ilacDetay.class).putExtra("from" , "main");
                 Bundle mBundle = new Bundle();
 
 

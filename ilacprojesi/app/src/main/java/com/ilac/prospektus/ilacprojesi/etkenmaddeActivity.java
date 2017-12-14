@@ -153,7 +153,7 @@ public class etkenmaddeActivity extends BaseActivity{
                 String secilenIlacAdi = arrayAdapter.getItem(i).toString();
                 Toast.makeText(etkenmaddeActivity.this,"Seçilen İlaç: " + secilenIlacAdi, Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(etkenmaddeActivity.this, ilacDetay.class);
+                Intent intent = new Intent(etkenmaddeActivity.this, ilacDetay.class).putExtra("from" , "etkenmadde");
                 Bundle mBundle = new Bundle();
 
 
