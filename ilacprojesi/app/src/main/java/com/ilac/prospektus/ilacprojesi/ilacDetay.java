@@ -1,6 +1,7 @@
 package com.ilac.prospektus.ilacprojesi;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,7 +26,6 @@ public class ilacDetay extends BaseActivity{
         setContentView(R.layout.activity_ilac_detay);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,6 +88,11 @@ public class ilacDetay extends BaseActivity{
                 finish();}
             if(getIntent().getStringExtra("from").equals("etkenmadde")) {
                 Intent i = new Intent(ilacDetay.this , etkenmaddeActivity.class);
+                startActivity(i);
+                finish();
+            }
+            if(getIntent().getStringExtra("from").equals("endikasyon")) {
+                Intent i = new Intent(ilacDetay.this , endikasyonActivity.class);
                 startActivity(i);
                 finish();
             }

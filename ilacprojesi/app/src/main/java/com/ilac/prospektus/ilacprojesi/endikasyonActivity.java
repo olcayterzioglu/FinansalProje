@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -66,11 +67,11 @@ public class endikasyonActivity extends BaseActivity {
 
 
 
-
-
-
-
-        //searchview işlemleri
+        /*
+        *
+        * Searchview alanında yazılan metni ilacların endikasyon bilgisinde ara
+        * Eşleşen ilaçların bilgilerini ilacListAd'a ekle
+        * */
 
         searchEndikasyon.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -81,44 +82,102 @@ public class endikasyonActivity extends BaseActivity {
             @Override
             public boolean onQueryTextChange(String text) {
 
+                if(text.length()>2) {
 
-                ilacListAd.clearAnimation();
+                    ilacListAd.clearAnimation();
+                    arrayListAd.clear();
 
-
-                arrayListAd.clear();
-
-                //arrayAdapter_Madde in içinde tüm ilaçların etken maddeleri var veri tekrarı olmadan
-
-                //Eğer ilaç o etken maddeyi içeriyor ise adı arrayList e eklenecek en son arrayList görüntülenecek
-
-                for (int z=0; z<veriAdeti; z++)
-                {
-                    if ( ilacDetay_Dizi[z][7].contains(text)) {
-                        arrayListAd.add( ilacDetay_Dizi[z][0] );
+                    // İlaçları Say
+                    for (int z = 0; z < veriAdeti; z++) {
+                        // Tüm ilaçların endikasyon bilgisinde arama yap
+                        if (ilacDetay_Dizi[z][7].contains(text)) {
+                            arrayListAd.add(ilacDetay_Dizi[z][0]);
+                        }
                     }
-                }
 
-//Girilen etken maddeyi içeren ilaç var ise o ilacların listesini listview a  ekle
+                    //Girilen endikasyon bilgisini içeren ilaç var ise o ilacların listesini listview a  ekle
 
-                if(arrayListAd.size()>0){
-                    arrayAdapter = new ArrayAdapter(endikasyonActivity.this, android.R.layout.simple_list_item_1, arrayListAd);
-                    ilacListAd.setAdapter(arrayAdapter);
+                    if (arrayListAd.size() > 0) {
+                        arrayAdapter = new ArrayAdapter(endikasyonActivity.this, android.R.layout.simple_list_item_1, arrayListAd);
+                        ilacListAd.setAdapter(arrayAdapter);
+                        ilacListAd.setVisibility(View.VISIBLE);
+                    } else {
+                        ilacListAd.setVisibility(View.INVISIBLE);
+                        Toast.makeText(endikasyonActivity.this, "Girilen endikasyon bilgisini içeren ilaç bulunamadı", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    bilgi.setText(text + " " + "içeren ilaçlar");
+
+
                 }else{
-                    Toast.makeText(endikasyonActivity.this, "Girilen endikasyon bilgisini içeren ilaç bulunamadı", Toast.LENGTH_SHORT).show();
+
+                    bilgi.setText("Endikasyon bilgisi giriniz...");
+                    ilacListAd.setVisibility(View.INVISIBLE);
+
                 }
-
-
-                bilgi.setText(text+" "+"içeren ilaçlar");
-
-                ilacListAd.setVisibility(View.VISIBLE);
-
 
                 return false;
             }
         });
 
 
-        //searchview işlemleri sonu
+
+
+        //Listview item tıklandığında
+        ilacListAd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //listView da elemanlardan herhangi birine tıklandığında ne yapılmasını istiyorsak buraya kodlayacağız
+
+                String secilenIlacAdi = arrayAdapter.getItem(i).toString();
+
+                Intent intent = new Intent(endikasyonActivity.this, ilacDetay.class).putExtra("from" , "endikasyon");
+                Bundle mBundle = new Bundle();
+
+
+                //arrayList in içinde tüm ilaçların adı var
+                //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
+                //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
+                for (int k=0; k<veriAdeti; k++){
+                    if(ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
+                        for (int j=0; j<14; j++){
+                            secilenIlacDetay_Dizi[0][j] = ilacDetay_Dizi[k][j];
+                        }
+                    }
+                }
+
+                mBundle.putSerializable("gonderDizi", secilenIlacDetay_Dizi);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
+            }
+        });
+
+        //Listview item tıklandığında sonu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -141,36 +200,6 @@ public class endikasyonActivity extends BaseActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     //Listeleme
@@ -268,15 +297,6 @@ public class endikasyonActivity extends BaseActivity {
             }
         }
 
-        //if(arrayList.size()>0){
-        //arrayAdapter = new ArrayAdapter(etkenmaddeActivity.this, android.R.layout.simple_list_item_1, arrayList);
-        // ilacList.setAdapter(arrayAdapter);
-        //}else{
-        // Toast.makeText(etkenmaddeActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
-        //  }
-
-
-
     }
 
 
@@ -307,8 +327,6 @@ public class endikasyonActivity extends BaseActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
 
         return super.onOptionsItemSelected(item);
     }
