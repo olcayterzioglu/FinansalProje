@@ -1,6 +1,7 @@
 package com.ilac.prospektus.ilacprojesi;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -64,6 +65,9 @@ public class etkenmaddeActivity extends BaseActivity{
         ilacListMadde = (ListView) findViewById(R.id.ilaclar_ListViewMadde);
         bilgi=(TextView) (findViewById(R.id.textviewMadde));
 
+        //textview altı çizili yap
+        bilgi.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
 
         //Firebase veri listelemek için
         Firebase.setAndroidContext(this);
@@ -114,8 +118,6 @@ public class etkenmaddeActivity extends BaseActivity{
 
 
 
-
-
 //Girilen etken maddeyi içeren ilaç var ise o ilacların listesini listview a  ekle
 
                 if(arrayListAd.size()>0){
@@ -127,7 +129,7 @@ public class etkenmaddeActivity extends BaseActivity{
 
 
 
-                bilgi.setText(secilenMadde+"  "+"içeren ilaçlar");
+                bilgi.setText(secilenMadde+" "+"içeren ilaçlar");
                 bilgi.setVisibility(View.VISIBLE);
                 ilacList.setVisibility(View.VISIBLE);
                 ilacListMadde.setVisibility(View.INVISIBLE);
@@ -137,33 +139,51 @@ public class etkenmaddeActivity extends BaseActivity{
 
         });
 
-
-
         //ListviewMadde item tıklandığında sonu
 
 
 
-
-
-
-
-
-
-
-
         //Listview item tıklandığında
+        ilacList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //listView da elemanlardan herhangi birine tıklandığında ne yapılmasını istiyorsak buraya kodlayacağız
+
+                String secilenIlacAdi = arrayAdapter.getItem(i).toString();
+                Toast.makeText(etkenmaddeActivity.this,"Seçilen İlaç: " + secilenIlacAdi, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(etkenmaddeActivity.this, ilacDetay.class);
+                Bundle mBundle = new Bundle();
 
 
+                //arrayList in içinde tüm ilaçların adı var
+                //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
+                //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
+                for (int k=0; k<veriAdeti; k++){
+                    if(ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
+                        for (int j=0; j<14; j++){
+                            secilenIlacDetay_Dizi[0][j] = ilacDetay_Dizi[k][j];
+                        }
+                    }
+                }
 
 
+                //Toast.makeText(MainActivity.this,secilenIlacDetay_Dizi[0][0].toString(), Toast.LENGTH_SHORT).show();
+
+                mBundle.putSerializable("gonderDizi", secilenIlacDetay_Dizi);
+                intent.putExtras(mBundle);
 
 
+                intent.putExtra("SecilenIlacAdi",secilenIlacAdi);
+                intent.putExtra("SecilenIlacEtkenMadde",arrayAdapter_EtkenMadde.getItem(i).toString());
 
 
-
+                startActivity(intent);
+            }
+        });
 
         //Listview item tıklandığında sonu
-
 
 
 
@@ -191,8 +211,6 @@ public class etkenmaddeActivity extends BaseActivity{
                 return false;
             }
         });
-
-
 
 
         //searchview işlemleri sonu

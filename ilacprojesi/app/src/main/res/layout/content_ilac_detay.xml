@@ -21,9 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="@dimen/search_view_text_padding"
+            android:gravity="center"
             android:text="TextView"
             android:textStyle="bold"
             android:textSize="18sp"/>
+
+
 
 
         <TextView
@@ -31,120 +34,253 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="FİRMA ADI:"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/text_color"
+            />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView1"/>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="BARKOD NO:"
+            android:layout_below="@+id/textView14"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/text_color"/>
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView2"/>
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="FİYAT:"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/text_color"/>
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView3"/>
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="ETKEN MADDE:"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:textColor="@color/text_color"
             />
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView4"/>
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="FORMÜL:"
             android:textStyle="bold"
             android:textSize="16sp"
+            android:textColor="@color/text_color"
 
             />
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView5"/>
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="FARMOKOLOJİK ÖZELLİKLER:"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/text_color"/>
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView6"/>
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="ENDİKASYONLAR:"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/text_color"/>
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView7"/>
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="KONTENDİKASYONLAR:"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/text_color"/>
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView8"/>
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="UYARILAR:"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/text_color"/>
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView9"/>
 
         <TextView
             android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="YAN ETKİLERİ:"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/text_color"/>
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView10"/>
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="ETKİLEŞİMLER:"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/text_color"/>
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView11"/>
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="KULLANIM ŞEKLİ:"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/text_color"/>
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView12"/>
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="TextView"
+            android:text="DOZ AŞIMI:"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/text_color" />
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="textview14"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView13"/>
+
+
+
+
+
+
+
+
+
+
+
+
     </LinearLayout>
 
 </ScrollView>
