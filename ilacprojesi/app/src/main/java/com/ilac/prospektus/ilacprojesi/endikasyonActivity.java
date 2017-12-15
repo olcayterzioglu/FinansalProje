@@ -36,10 +36,9 @@ public class endikasyonActivity extends BaseActivity {
     ArrayAdapter arrayAdapter;
 
 
-    String [][] ilacDetay_Dizi;
+    //String [][] ilacDetay_Dizi;
     String [][] secilenIlacDetay_Dizi = new String[1][14];
-
-    int veriAdeti=0;
+    //int veriAdeti=0;
 
 
     @Override
@@ -88,10 +87,10 @@ public class endikasyonActivity extends BaseActivity {
                     arrayListAd.clear();
 
                     // İlaçları Say
-                    for (int z = 0; z < veriAdeti; z++) {
+                    for (int z = 0; z < MainActivity.veriAdeti; z++) {
                         // Tüm ilaçların endikasyon bilgisinde arama yap
-                        if (ilacDetay_Dizi[z][7].contains(text)) {
-                            arrayListAd.add(ilacDetay_Dizi[z][0]);
+                        if (MainActivity.ilacDetay_Dizi[z][7].contains(text)) {
+                            arrayListAd.add(MainActivity.ilacDetay_Dizi[z][0]);
                         }
                     }
 
@@ -140,10 +139,10 @@ public class endikasyonActivity extends BaseActivity {
                 //arrayList in içinde tüm ilaçların adı var
                 //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
                 //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
-                for (int k=0; k<veriAdeti; k++){
-                    if(ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
+                for (int k=0; k<MainActivity.veriAdeti; k++){
+                    if(MainActivity.ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
                         for (int j=0; j<14; j++){
-                            secilenIlacDetay_Dizi[0][j] = ilacDetay_Dizi[k][j];
+                            secilenIlacDetay_Dizi[0][j] = MainActivity.ilacDetay_Dizi[k][j];
                         }
                     }
                 }
@@ -213,56 +212,6 @@ public class endikasyonActivity extends BaseActivity {
             arrayListAd.add(ilaclar.getAd());
 
 
-        }
-
-        veriAdeti = arrayListAd.size();
-
-        //tüm ilaç bilgilerini çekip çok boyutlu dizi içine atıyorum
-        ilacDetay_Dizi = new String[veriAdeti][14];
-        int art=0;
-        for(DataSnapshot data : ds.getChildren()){
-
-            ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
-            ilaclar.setFirma_adi(data.getValue(Ilaclar.class).getFirma_adi());
-            ilaclar.setBarkod_no(data.getValue(Ilaclar.class).getBarkod_no());
-            ilaclar.setFiyat(data.getValue(Ilaclar.class).getFiyat());
-            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
-
-            ilaclar.setFormul(data.getValue(Ilaclar.class).getFormul());
-            ilaclar.setFarmokolojik_ozellik(data.getValue(Ilaclar.class).getFarmokolojik_ozellik());
-            ilaclar.setEndikasyonlar(data.getValue(Ilaclar.class).getEndikasyonlar());
-            ilaclar.setKontrendikasyonlar(data.getValue(Ilaclar.class).getKontrendikasyonlar());
-            ilaclar.setUyarilar(data.getValue(Ilaclar.class).getUyarilar());
-
-            ilaclar.setYan_etkiler(data.getValue(Ilaclar.class).getYan_etkiler());
-            ilaclar.setEtkilesimler(data.getValue(Ilaclar.class).getEtkilesimler());
-            ilaclar.setKullanim_sekli(data.getValue(Ilaclar.class).getKullanim_sekli());
-            ilaclar.setDoz_asimi(data.getValue(Ilaclar.class).getDoz_asimi());
-
-
-            ilacDetay_Dizi[art][0]=ilaclar.getAd();
-            ilacDetay_Dizi[art][1]=ilaclar.getFirma_adi();
-            ilacDetay_Dizi[art][2]=ilaclar.getBarkod_no();
-            ilacDetay_Dizi[art][3]=ilaclar.getFiyat();
-            ilacDetay_Dizi[art][4]=ilaclar.getEtken_madde();
-
-            ilacDetay_Dizi[art][5]=ilaclar.getFormul();
-            ilacDetay_Dizi[art][6]=ilaclar.getFarmokolojik_ozellik();
-            ilacDetay_Dizi[art][7]=ilaclar.getEndikasyonlar();
-            ilacDetay_Dizi[art][8]=ilaclar.getKontrendikasyonlar();
-            ilacDetay_Dizi[art][9]=ilaclar.getUyarilar();
-
-            ilacDetay_Dizi[art][10]=ilaclar.getYan_etkiler();
-            ilacDetay_Dizi[art][11]=ilaclar.getEtkilesimler();
-            ilacDetay_Dizi[art][12]=ilaclar.getKullanim_sekli();
-            ilacDetay_Dizi[art][13]=ilaclar.getDoz_asimi();
-
-            //liste bitince çıkması için
-
-            art = art + 1;
-            if (art == veriAdeti){
-                break;
-            }
         }
 
     }

@@ -40,7 +40,11 @@
         <activity
             android:name=".barkodActivity"
             android:label="@string/title_activity_barkod"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".firmaAdiActivity"
+            android:label="@string/title_activity_firmaAdi"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

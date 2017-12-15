@@ -6,6 +6,7 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- Menüler için string tanımlaması -->
     <string name="anasayfa">Ana Sayfa</string>
     <string name="cikis">Çıkış</string>
     <string name="etkenMaddeIlaclar">Etken Maddesine Göre İlaçlar</string>
@@ -15,12 +16,23 @@
     <string name="hakkimizda">Hakkımızda</string>
 
     <!-- TODO: Remove or change this placeholder text -->
+    <!-- Activity başlıkları için string tanımlaması -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_etkenmadde">Etken Madde</string>
     <string name="title_activity_endikasyon">Endikasyon Bilgisine Göre</string>
     <string name="title_activity_ilac_detay">İlaç Detayları</string>
-    <string name="title_activity_hakkimizda">Firma Adına Göre</string>
     <string name="title_activity_barkod">Barkod Numarasına Göre</string>
+    <string name="title_activity_firmaAdi">Firma Adına Göre Arama</string>
+    <string name="title_activity_hakkimizda">Hakkımızda</string>
+
+    <!-- Hakkımızda içerikleri için string tanımlamaları-->
+    <string name="ismet_sandikci">İsmet SANDIKÇI</string>
+    <string name="olcay_terzioğlu">M. Olcay Terzioğlu</string>
+    <string name="baris_kaya">Barış KAYA</string>
+    <string name="serkan_basar">Serkan BAŞAR</string>
+    <string name="sau_bilg_muh">Sakarya Üniversitesi\nBilgisayar Mühendisliği Bölümü</string>
+
+
 
 
 </resources>

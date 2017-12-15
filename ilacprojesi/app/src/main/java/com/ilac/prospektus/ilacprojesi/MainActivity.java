@@ -42,9 +42,9 @@ public class MainActivity extends BaseActivity {
     ArrayList<String> arrayList_EtkenMadde = new ArrayList<>();
     ArrayAdapter arrayAdapter, arrayAdapter_EtkenMadde;
 
-    String [][] ilacDetay_Dizi;
-    String [][] secilenIlacDetay_Dizi = new String[1][14];
-    int veriAdeti=0;
+    static String [][] ilacDetay_Dizi;
+    static String [][] secilenIlacDetay_Dizi = new String[1][14];
+    static int veriAdeti=0;
 
     //Search
     SearchView searchView;

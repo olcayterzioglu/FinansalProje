@@ -1,6 +1,7 @@
 package com.ilac.prospektus.ilacprojesi;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -29,15 +28,17 @@ import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
 
-public class barkodActivity extends BaseActivity {
+public class firmaAdiActivity extends BaseActivity {
 
     final static String DB_URL = "https://ilac-prospektus.firebaseio.com/";
     Firebase firebase;
-    ListView ilacListAdBarkod;
-    Button button;
-    EditText editText;
-    ArrayList<String> arrayListAdBarkod = new ArrayList<>();
-    ArrayAdapter arrayAdapter;
+    ListView ilacListAd,ilacListFirma;
+    TextView bilgi;
+    SearchView searchViewFirma;
+    ArrayList<String> arrayListAd = new ArrayList<>();
+    ArrayList<String> arrayList_FirmaAd = new ArrayList<>();
+    ArrayAdapter arrayAdapter,arrayAdapterFirma;
+
 
     //String [][] ilacDetay_Dizi;
     String [][] secilenIlacDetay_Dizi = new String[1][14];
@@ -48,63 +49,52 @@ public class barkodActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_barkod);
+        setContentView(R.layout.activity_firma_adi);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        searchViewFirma =(SearchView) findViewById(R.id.searchFirma);
+        ilacListFirma = (ListView) findViewById(R.id.ilaclar_ListViewFirma);
+        bilgi=(TextView) (findViewById(R.id.textviewFirma));
+        ilacListAd = (ListView) findViewById(R.id.ilaclar_ListViewFirmailac);
 
-        button = (Button) findViewById(R.id.button3);
-        editText = (EditText) findViewById(R.id.EditTextBarkod);
-        ilacListAdBarkod = (ListView) findViewById(R.id.ilaclar_ListViewBarkod);
+        //textview altı çizili yap
+        bilgi.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
 
         //Firebase veri listelemek için
         Firebase.setAndroidContext(this);
         firebase = new Firebase(DB_URL);
+
         this.retrieveData();
         //Firebase veri listelemek için son
-        Toast.makeText(barkodActivity.this, "Barkod numarası giriniz.", Toast.LENGTH_SHORT).show();
 
 
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        //searchview işlemleri
 
-                if(editText.getText().length()==13) {
+        searchViewFirma.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String text) {
+                return false;
+            }
 
-                    ilacListAdBarkod.clearAnimation();
-                    arrayListAdBarkod.clear();
+            @Override
+            public boolean onQueryTextChange(String text) {
 
-                    // İlaçları Say
-                    for (int z = 0; z < MainActivity.veriAdeti; z++) {
-                        // Tüm ilaçların barkod bilgisinde arama yap
-                        if (MainActivity.ilacDetay_Dizi[z][2].contains(editText.getText())) {
-                            arrayListAdBarkod.add(MainActivity.ilacDetay_Dizi[z][0]);
-                        }
-                    }
+                arrayAdapterFirma.getFilter().filter(text);
+                ilacListFirma.setVisibility(View.VISIBLE);
+                bilgi.setVisibility(View.INVISIBLE);
+                ilacListAd.setVisibility(View.INVISIBLE);
 
-                    //Girilen barkod numarasına ait bir ilaç var ise o ilacların listesini listview a  ekle
-
-                    if (arrayListAdBarkod.size() > 0) {
-                        arrayAdapter = new ArrayAdapter(barkodActivity.this, android.R.layout.simple_list_item_1, arrayListAdBarkod);
-                        ilacListAdBarkod.setAdapter(arrayAdapter);
-                        ilacListAdBarkod.setVisibility(View.VISIBLE);
-                    } else {
-                        ilacListAdBarkod.setVisibility(View.INVISIBLE);
-                        Toast.makeText(barkodActivity.this, "Girilen barkoda ait ilaç bulunamadı", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-
-                    ilacListAdBarkod.setVisibility(View.INVISIBLE);
-
-                    Toast.makeText(barkodActivity.this, "Barkod numarası 13 haneli olmalıdır.", Toast.LENGTH_SHORT).show();
-                }
+                return false;
             }
         });
 
+        //searchview işlemleri sonu
+
 
         //Listview item tıklandığında
-        ilacListAdBarkod.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ilacListAd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -112,8 +102,9 @@ public class barkodActivity extends BaseActivity {
 
                 String secilenIlacAdi = arrayAdapter.getItem(i).toString();
 
-                Intent intent = new Intent(barkodActivity.this, ilacDetay.class).putExtra("from" , "barkod");
+                Intent intent = new Intent(firmaAdiActivity.this, ilacDetay.class).putExtra("from" , "firma");
                 Bundle mBundle = new Bundle();
+
 
                 //arrayList in içinde tüm ilaçların adı var
                 //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
@@ -133,7 +124,53 @@ public class barkodActivity extends BaseActivity {
             }
         });
 
-        //Listview item tıklandığında son
+        //Listview item tıklandığında sonu
+
+
+
+
+        //ListviewFirma item tıklandığında
+
+        ilacListFirma.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                ilacListAd.clearAnimation();
+
+                String secilenFirma = arrayAdapterFirma.getItem(i).toString();
+
+                arrayListAd.clear();
+
+                //arrayAdapter_Madde in içinde tüm ilaçların etken maddeleri var veri tekrarı olmadan
+
+                //Eğer ilaç o etken maddeyi içeriyor ise adı arrayList e eklenecek en son arrayList görüntülenecek
+
+                for (int z=0; z<MainActivity.veriAdeti; z++)
+                {
+                    if (MainActivity.ilacDetay_Dizi[z][1].contains(secilenFirma)) {
+                        arrayListAd.add( MainActivity.ilacDetay_Dizi[z][0] );
+                    }
+                }
+
+                //Girilen firmanın ilaçlarını listele
+
+                if(arrayListAd.size()>0){
+                    arrayAdapter = new ArrayAdapter(firmaAdiActivity.this, android.R.layout.simple_list_item_1, arrayListAd);
+                    ilacListAd.setAdapter(arrayAdapter);
+                }else{
+                    Toast.makeText(firmaAdiActivity.this, "Girilen etken maddeyi içeren ilaç bulunamadı", Toast.LENGTH_SHORT).show();
+                }
+
+                bilgi.setText(secilenFirma+" "+"Firmasının ilaçları");
+                bilgi.setVisibility(View.VISIBLE);
+                ilacListAd.setVisibility(View.VISIBLE);
+                ilacListFirma.setVisibility(View.INVISIBLE);
+
+            }
+
+        });
+
+        //ListviewMadde item tıklandığında sonu
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -144,7 +181,6 @@ public class barkodActivity extends BaseActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
 
@@ -179,17 +215,39 @@ public class barkodActivity extends BaseActivity {
     }
     private void getUpdates(DataSnapshot ds){
 
-        arrayListAdBarkod.clear();
+        arrayListAd.clear();
+        arrayList_FirmaAd.clear();
+
 
         Ilaclar ilaclar = new Ilaclar();
 
         for(DataSnapshot data : ds.getChildren()) {
 
             ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
-            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
+            ilaclar.setFirma_adi(data.getValue(Ilaclar.class).getFirma_adi());
 
-            arrayListAdBarkod.add(ilaclar.getAd());
+            arrayListAd.add(ilaclar.getAd());
+
+            // firmaları adaptere doldurdum
+
+            if (arrayList_FirmaAd.contains(ilaclar.getFirma_adi()) == false)
+            {
+                arrayList_FirmaAd.add((ilaclar.getFirma_adi()));
+
+
+            }
         }
+
+        // firma sayısı sıfır değilse  ilacliste yukledim
+
+        if(arrayList_FirmaAd.size()>0){
+            arrayAdapterFirma= new ArrayAdapter(firmaAdiActivity.this, android.R.layout.simple_list_item_1, arrayList_FirmaAd);
+            ilacListFirma.setAdapter(arrayAdapterFirma);
+
+        }else{
+            Toast.makeText(firmaAdiActivity.this, "Firmalar yüklenemedi", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
@@ -201,7 +259,7 @@ public class barkodActivity extends BaseActivity {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             //super.onBackPressed();
-            Intent i = new Intent(barkodActivity.this , MainActivity.class );
+            Intent i = new Intent(firmaAdiActivity.this , MainActivity.class );
             startActivity(i);
             finish();
         }
@@ -210,7 +268,7 @@ public class barkodActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.barkod, menu);
+        getMenuInflater().inflate(R.menu.firma_adi, menu);
         return true;
     }
 

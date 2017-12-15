@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:scaleType="fitXY"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.ilac.prospektus.ilacprojesi.firmaAdiActivity"
+    tools:showIn="@layout/app_bar_firma_adi">
+
+    <SearchView
+        android:id="@+id/searchFirma"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:queryHint="Firma adı giriniz..." />
+
+    <ListView
+        android:id="@+id/ilaclar_ListViewFirma"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/searchFirma"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textviewFirma"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchFirma"
+        android:layout_margin="24dp"
+        android:gravity="center"
+        android:text="Firma adı giriniz..."
+        android:textColor="@color/text_color"
+        android:visibility="visible" />
+
+    <ListView
+        android:id="@+id/ilaclar_ListViewFirmailac"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textviewFirma"
+        android:layout_marginTop="20dp"
+        android:visibility="invisible" />
+
+</RelativeLayout>

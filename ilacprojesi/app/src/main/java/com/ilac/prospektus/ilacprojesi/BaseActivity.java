@@ -45,7 +45,12 @@ public class BaseActivity extends AppCompatActivity
             startActivity(k);
             finish();
 
-        } else if (id == R.id.nav_hakkimizda) {
+        } else if (id == R.id.nav_firmaAdi) {
+            Intent o = new Intent(BaseActivity.this , firmaAdiActivity.class );
+            startActivity(o);
+            finish();
+
+        }else if (id == R.id.nav_hakkimizda) {
             Intent o = new Intent(BaseActivity.this , hakkimizdaActivity.class );
             startActivity(o);
             finish();

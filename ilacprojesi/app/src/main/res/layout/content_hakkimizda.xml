@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,47 +10,248 @@
     tools:context="com.ilac.prospektus.ilacprojesi.hakkimizdaActivity"
     tools:showIn="@layout/app_bar_hakkimizda">
 
-    <SearchView
-        android:id="@+id/searchFirma"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:queryHint="Firma adı giriniz..." />
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:lineSpacingExtra="8sp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/ismet_sandikci"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="22sp"
+                    android:layout_marginStart="10dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:lineSpacingExtra="8sp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/sau_bilg_muh"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:layout_marginStart="10dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/buttonIsmetLinkedin"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@mipmap/ic_linkedin_box_black_24dp"
+                        android:lineSpacingExtra="8sp" />
+                    <Button
+                        android:id="@+id/buttonIsmetGithub"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@mipmap/ic_github_box_black_24dp"
+                        android:lineSpacingExtra="8sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:color/holo_red_dark" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:lineSpacingExtra="8sp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/olcay_terzioğlu"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="22sp"
+                    android:layout_marginStart="10dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:lineSpacingExtra="8sp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/sau_bilg_muh"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:layout_marginStart="10dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/buttonOlcayLinkedin"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@mipmap/ic_linkedin_box_black_24dp"
+                        android:lineSpacingExtra="8sp" />
+                    <Button
+                        android:id="@+id/buttonOlcayGithub"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@mipmap/ic_github_box_black_24dp"
+                        android:lineSpacingExtra="8sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:color/holo_red_dark" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:lineSpacingExtra="8sp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/baris_kaya"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="22sp"
+                    android:layout_marginStart="10dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:lineSpacingExtra="8sp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/sau_bilg_muh"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:layout_marginStart="10dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/buttonBarisLinkedin"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@mipmap/ic_linkedin_box_black_24dp"
+                        android:lineSpacingExtra="8sp" />
+                    <Button
+                        android:id="@+id/buttonBarisGithub"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@mipmap/ic_github_box_black_24dp"
+                        android:lineSpacingExtra="8sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:color/holo_red_dark" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:lineSpacingExtra="8sp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/serkan_basar"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="22sp"
+                    android:layout_marginStart="10dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:lineSpacingExtra="8sp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/sau_bilg_muh"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:layout_marginStart="10dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/buttonSerkanLinkedin"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@mipmap/ic_linkedin_box_black_24dp"
+                        android:lineSpacingExtra="8sp" />
+                    <Button
+                        android:id="@+id/buttonSerkanGithub"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@mipmap/ic_github_box_black_24dp"
+                        android:lineSpacingExtra="8sp" />
+                </LinearLayout>
 
 
-    <ListView
-        android:id="@+id/ilaclar_ListViewFirma"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/searchFirma"
-        android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/textviewFirma"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/searchFirma"
-        android:layout_margin="24dp"
-        android:gravity="center"
-        android:text="Firma adı giriniz..."
-        android:textColor="@color/text_color"
-        android:visibility="visible" />
+            </LinearLayout>
 
+        </ScrollView>
 
-    <ListView
-        android:id="@+id/ilaclar_ListViewFirmailac"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textviewFirma"
-        android:layout_marginTop="20dp"
-        android:visibility="invisible" />
+    </LinearLayout>
 
-
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -22,14 +22,20 @@
             android:icon="@mipmap/ic_barcode_black_24dp"
             android:title="@string/barkod" />
         <item
-            android:id="@+id/nav_hakkimizda"
+            android:id="@+id/nav_firmaAdi"
             android:icon="@mipmap/ic_business_black_24dp"
             android:title="@string/firmaAdina" />
+    </group>
+
+    <group android:id="@+id/nav_footer">
+        <item
+            android:id="@+id/nav_hakkimizda"
+            android:icon="@mipmap/ic_group_black_24dp"
+            android:title="@string/hakkimizda" />
         <item
             android:id="@+id/nav_cikis"
             android:icon="@mipmap/ic_exit_to_app_black_24dp"
             android:title="@string/cikis" />
-
     </group>
 
 </menu>

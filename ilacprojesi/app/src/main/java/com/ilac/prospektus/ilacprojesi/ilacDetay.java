@@ -118,7 +118,7 @@ public class ilacDetay extends BaseActivity{
             }
 
             if(getIntent().getStringExtra("from").equals("firma")) {
-                Intent i = new Intent(ilacDetay.this , hakkimizdaActivity.class);
+                Intent i = new Intent(ilacDetay.this , firmaAdiActivity.class);
                 startActivity(i);
                 finish();
             }

@@ -2,6 +2,7 @@ package com.ilac.prospektus.ilacprojesi;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -27,24 +29,7 @@ import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
 
-
-
 public class hakkimizdaActivity extends BaseActivity{
-
-    final static String DB_URL = "https://ilac-prospektus.firebaseio.com/";
-    Firebase firebase;
-    ListView ilacListAd,ilacListFirma;
-    TextView bilgi;
-    SearchView searchViewFirma;
-    ArrayList<String> arrayListAd = new ArrayList<>();
-    ArrayList<String> arrayList_FirmaAd = new ArrayList<>();
-    ArrayAdapter arrayAdapter,arrayAdapterFirma;
-
-
-    String [][] ilacDetay_Dizi;
-    String [][] secilenIlacDetay_Dizi = new String[1][14];
-
-    int veriAdeti=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,130 +37,6 @@ public class hakkimizdaActivity extends BaseActivity{
         setContentView(R.layout.activity_hakkimizda);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        searchViewFirma =(SearchView) findViewById(R.id.searchFirma);
-        ilacListFirma = (ListView) findViewById(R.id.ilaclar_ListViewFirma);
-        bilgi=(TextView) (findViewById(R.id.textviewFirma));
-        ilacListAd = (ListView) findViewById(R.id.ilaclar_ListViewFirmailac);
-
-        //textview altı çizili yap
-        bilgi.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
-
-        //Firebase veri listelemek için
-        Firebase.setAndroidContext(this);
-        firebase = new Firebase(DB_URL);
-
-        this.retrieveData();
-        //Firebase veri listelemek için son
-
-
-        //searchview işlemleri
-
-        searchViewFirma.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String text) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String text) {
-
-                arrayAdapterFirma.getFilter().filter(text);
-                ilacListFirma.setVisibility(View.VISIBLE);
-                bilgi.setVisibility(View.INVISIBLE);
-                ilacListAd.setVisibility(View.INVISIBLE);
-
-                return false;
-            }
-        });
-
-        //searchview işlemleri sonu
-
-
-        //Listview item tıklandığında
-        ilacListAd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                //listView da elemanlardan herhangi birine tıklandığında ne yapılmasını istiyorsak buraya kodlayacağız
-
-                String secilenIlacAdi = arrayAdapter.getItem(i).toString();
-
-                Intent intent = new Intent(hakkimizdaActivity.this, ilacDetay.class).putExtra("from" , "firma");
-                Bundle mBundle = new Bundle();
-
-
-                //arrayList in içinde tüm ilaçların adı var
-                //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
-                //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
-                for (int k=0; k<veriAdeti; k++){
-                    if(ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
-                        for (int j=0; j<14; j++){
-                            secilenIlacDetay_Dizi[0][j] = ilacDetay_Dizi[k][j];
-                        }
-                    }
-                }
-
-                mBundle.putSerializable("gonderDizi", secilenIlacDetay_Dizi);
-                intent.putExtras(mBundle);
-
-                startActivity(intent);
-            }
-        });
-
-        //Listview item tıklandığında sonu
-
-
-
-
-        //ListviewFirma item tıklandığında
-
-        ilacListFirma.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                ilacListAd.clearAnimation();
-
-                String secilenFirma = arrayAdapterFirma.getItem(i).toString();
-
-                arrayListAd.clear();
-
-                //arrayAdapter_Madde in içinde tüm ilaçların etken maddeleri var veri tekrarı olmadan
-
-                //Eğer ilaç o etken maddeyi içeriyor ise adı arrayList e eklenecek en son arrayList görüntülenecek
-
-                for (int z=0; z<veriAdeti; z++)
-                {
-                    if ( ilacDetay_Dizi[z][1].contains(secilenFirma)) {
-                        arrayListAd.add( ilacDetay_Dizi[z][0] );
-                    }
-                }
-
-//Girilen firmanın ilaçlarını listele
-
-                if(arrayListAd.size()>0){
-                    arrayAdapter = new ArrayAdapter(hakkimizdaActivity.this, android.R.layout.simple_list_item_1, arrayListAd);
-                    ilacListAd.setAdapter(arrayAdapter);
-                }else{
-                    Toast.makeText(hakkimizdaActivity.this, "Girilen etken maddeyi içeren ilaç bulunamadı", Toast.LENGTH_SHORT).show();
-                }
-
-                bilgi.setText(secilenFirma+" "+"Firmasının ilaçları");
-                bilgi.setVisibility(View.VISIBLE);
-                ilacListAd.setVisibility(View.VISIBLE);
-                ilacListFirma.setVisibility(View.INVISIBLE);
-
-            }
-
-        });
-
-        //ListviewMadde item tıklandığında sonu
-
-
-
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -186,128 +47,80 @@ public class hakkimizdaActivity extends BaseActivity{
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Button buton_ismetLinkedin = (Button)findViewById(R.id.buttonIsmetLinkedin);
+        Button buton_ismetGithub = (Button)findViewById(R.id.buttonIsmetGithub);
+        Button buton_olcayLinkedin = (Button)findViewById(R.id.buttonOlcayLinkedin);
+        Button buton_olcayGithub = (Button)findViewById(R.id.buttonOlcayGithub);
+        Button buton_barisLinkedin = (Button)findViewById(R.id.buttonBarisLinkedin);
+        Button buton_barisGithub = (Button)findViewById(R.id.buttonBarisGithub);
+        Button buton_serkanLinkedin = (Button)findViewById(R.id.buttonSerkanLinkedin);
+        Button buton_serkanGithub = (Button)findViewById(R.id.buttonSerkanGithub);
 
-    }
-
-
-
-    //Listeleme
-    private void retrieveData(){
-        firebase.addChildEventListener(new ChildEventListener() {
+        buton_ismetLinkedin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                getUpdates(dataSnapshot);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                getUpdates(dataSnapshot);
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
+            public void onClick(View arg0) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/ismetsandikci"));
+                startActivity(intent);
             }
         });
-    }
-    private void getUpdates(DataSnapshot ds){
 
-        arrayListAd.clear();
-        arrayList_FirmaAd.clear();
-
-
-        Ilaclar ilaclar = new Ilaclar();
-
-        for(DataSnapshot data : ds.getChildren()) {
-
-            ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
-            ilaclar.setFirma_adi(data.getValue(Ilaclar.class).getFirma_adi());
-
-            arrayListAd.add(ilaclar.getAd());
-
-         // firmaları adaptere doldurdum
-
-            if (arrayList_FirmaAd.contains(ilaclar.getFirma_adi()) == false)
-            {
-                arrayList_FirmaAd.add((ilaclar.getFirma_adi()));
-
-
+        buton_ismetGithub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/ismetsandikci"));
+                startActivity(intent);
             }
-        }
+        });
 
-        veriAdeti = arrayListAd.size();
-
-        //tüm ilaç bilgilerini çekip çok boyutlu dizi içine atıyorum
-        ilacDetay_Dizi = new String[veriAdeti][14];
-        int art=0;
-        for(DataSnapshot data : ds.getChildren()){
-
-            ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
-            ilaclar.setFirma_adi(data.getValue(Ilaclar.class).getFirma_adi());
-            ilaclar.setBarkod_no(data.getValue(Ilaclar.class).getBarkod_no());
-            ilaclar.setFiyat(data.getValue(Ilaclar.class).getFiyat());
-            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
-
-            ilaclar.setFormul(data.getValue(Ilaclar.class).getFormul());
-            ilaclar.setFarmokolojik_ozellik(data.getValue(Ilaclar.class).getFarmokolojik_ozellik());
-            ilaclar.setEndikasyonlar(data.getValue(Ilaclar.class).getEndikasyonlar());
-            ilaclar.setKontrendikasyonlar(data.getValue(Ilaclar.class).getKontrendikasyonlar());
-            ilaclar.setUyarilar(data.getValue(Ilaclar.class).getUyarilar());
-
-            ilaclar.setYan_etkiler(data.getValue(Ilaclar.class).getYan_etkiler());
-            ilaclar.setEtkilesimler(data.getValue(Ilaclar.class).getEtkilesimler());
-            ilaclar.setKullanim_sekli(data.getValue(Ilaclar.class).getKullanim_sekli());
-            ilaclar.setDoz_asimi(data.getValue(Ilaclar.class).getDoz_asimi());
-
-
-            ilacDetay_Dizi[art][0]=ilaclar.getAd();
-            ilacDetay_Dizi[art][1]=ilaclar.getFirma_adi();
-            ilacDetay_Dizi[art][2]=ilaclar.getBarkod_no();
-            ilacDetay_Dizi[art][3]=ilaclar.getFiyat();
-            ilacDetay_Dizi[art][4]=ilaclar.getEtken_madde();
-
-            ilacDetay_Dizi[art][5]=ilaclar.getFormul();
-            ilacDetay_Dizi[art][6]=ilaclar.getFarmokolojik_ozellik();
-            ilacDetay_Dizi[art][7]=ilaclar.getEndikasyonlar();
-            ilacDetay_Dizi[art][8]=ilaclar.getKontrendikasyonlar();
-            ilacDetay_Dizi[art][9]=ilaclar.getUyarilar();
-
-            ilacDetay_Dizi[art][10]=ilaclar.getYan_etkiler();
-            ilacDetay_Dizi[art][11]=ilaclar.getEtkilesimler();
-            ilacDetay_Dizi[art][12]=ilaclar.getKullanim_sekli();
-            ilacDetay_Dizi[art][13]=ilaclar.getDoz_asimi();
-
-            //liste bitince çıkması için
-
-            art = art + 1;
-            if (art == veriAdeti){
-                break;
+        buton_olcayLinkedin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/"));
+                //startActivity(intent);
             }
-        }
+        });
 
+        buton_olcayGithub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/olcayterzioglu"));
+                startActivity(intent);
+            }
+        });
 
-     // firma sayısı sıfır değilse  ilacliste yukledim
+        buton_barisLinkedin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/bar%C4%B1%C5%9F-kaya-7934b7107"));
+                startActivity(intent);
+            }
+        });
 
-        if(arrayList_FirmaAd.size()>0){
-            arrayAdapterFirma= new ArrayAdapter(hakkimizdaActivity.this, android.R.layout.simple_list_item_1, arrayList_FirmaAd);
-            ilacListFirma.setAdapter(arrayAdapterFirma);
+        buton_barisGithub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/barissskaya"));
+                startActivity(intent);
+            }
+        });
 
-        }else{
-            Toast.makeText(hakkimizdaActivity.this, "Firmalar yüklenemedi", Toast.LENGTH_SHORT).show();
-        }
+        buton_serkanLinkedin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/"));
+                //startActivity(intent);
+            }
+        });
+
+        buton_serkanGithub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sbasarr"));
+                startActivity(intent);
+            }
+        });
 
     }
-
 
     @Override
     public void onBackPressed() {
@@ -335,7 +148,6 @@ public class hakkimizdaActivity extends BaseActivity{
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
 
         return super.onOptionsItemSelected(item);
     }
