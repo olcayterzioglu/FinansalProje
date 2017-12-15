@@ -1,7 +1,8 @@
 <?php
 
 mb_internal_encoding('UTF-8');
- 
+
+
 function _print($value)
 {
 	echo "<pre>";
@@ -14,7 +15,20 @@ $pages = 0;
 $search_key = 0;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-	$search_key = $_POST['key']; 
+	$search_key = $_POST['key'];
+	if (isset($_POST['search_page']) && $_POST['search_page'] > 0){
+		$search_page = $_POST['search_page'];
+	}
+
+
+	$url = 'http://www.ilacprospektusu.com/ilac/rehber/' . mb_strtolower($search_key, 'UTF-8');
+	$result = getContents($url);
+
+	preg_match_all('/<div class=\"sayfa\">(.*?)<\/div>/s', $result, $sayfa_numaralari);
+	if (preg_match_all('/<a\s+href=["\']([^"\']+)["\']/i', $sayfa_numaralari[1][0], $sayfalar_link, PREG_PATTERN_ORDER)){
+		$sayfalar = array_unique($sayfalar_link[1]);
+		$pages = str_replace('/ilac/rehber/' . $search_key . '/', '', end($sayfalar));
+	}
 }
 
 
@@ -68,7 +82,19 @@ $keyList[] = array('key' => 'z', 'value' => 'Z');
 				echo '<option ' . ($search_key == $value['key'] ? 'selected ' : '') . 'value="' . $value['key'] . '">' . $value['value'] . '</option>';
 			}
 			?>
-        </select> 
+        </select>
+
+		<?php
+
+		if ($pages){
+			echo '<select name="search_page" id="searchpage" style="width: 100px;">';
+			for ($i = 1; $i <= $pages; $i++){
+				echo '<option ' . ($search_page == $i ? 'selected ' : '') . 'value="' . $i . '">' . $i . '</option>';
+			}
+			echo '</select>';
+		}
+
+		?>
 
         <br><br>
         <button type="submit">Listele</button>
@@ -84,7 +110,10 @@ if ($search_key){
 	$liste = false;
 	$sayfa = false;
 
-	$url = 'http://www.ilacprospektusu.com/ilac/rehber/' . mb_strtolower($search_key, 'UTF-8'); 
+	$url = 'http://www.ilacprospektusu.com/ilac/rehber/' . mb_strtolower($search_key, 'UTF-8');
+	if ($search_page > 0 && $search_page <= $pages){
+		$url = $url . '/' . $search_page;
+	}
 	$result = getContents($url);
 
 
@@ -107,13 +136,18 @@ if ($search_key){
 
 
 function getDetails($links)
-{  
+{
+
+	require_once 'db.php';
+	$db = new db('localhost','root','','ilac_prospektus');
+	
+	//$connect = mysqli_connect("localhost", "root", "", "ilac_prospektus");
+	
 
 	foreach ($links as $link){
-		
 		$url = $link;
 		//$result = getContents('https://www.ilacprospektusu.com/ilac/14/a-nox-fort-550-mg-20-tablet');
-		echo "<br>" . $url . "<br>";
+		//echo "<br>" . $url . "<br>";
 		$result = getContents($url);
 
 
@@ -121,22 +155,61 @@ function getDetails($links)
 		$ilac_bilgisi = "";
 		$firma_bilgisi = "";
 
-		preg_match_all('/<div class=\"prospektus\" id=\"prospektus\">(.*?)<div class=\"ilacesdegerleri\" id=\"ilacesdegerleri\">/s', $result, $prospektus);  
+		preg_match_all('/<div class=\"prospektus\" id=\"prospektus\">(.*?)<div class=\"ilacesdegerleri\" id=\"ilacesdegerleri\">/s', $result, $prospektus);
 		preg_match_all('/<div class=\"ilac_bilgileri\">(.*?)<\/div>/s', $result, $ilac);
-		preg_match_all('/<div class=\"firma_bilgileri\">(.*?)<\/div>/s', $result, $firma);   
- 
+		preg_match_all('/<div class=\"firma_bilgileri\">(.*?)<\/div>/s', $result, $firma);
 
 		$ilac_bilgisi = $ilac[1][0];
 		$prospektus = $prospektus[1][0];
 		$firma_bilgisi = $firma[1][0];
-		
-		
-		$prospektus = getDetailIlacProspektus($prospektus, 0); 
+
+
+		$prospektus = getDetailIlacProspektus($prospektus, 0);
+		/*
+		 *
+		 *  $prospektus  key parametreleri
+			formulu
+			farmakolojik-ozellikleri
+			endikasyonlari
+			kontrendikasyonlari
+			uyarilaronlemler
+			yan-etkileradvers-etkiler
+			ilac-etkilesimleri
+			kullanim-sekli-ve-dozu
+			kullanma-talimati-ve-kisa-urun-bilgileri
+		 *
+		 *
+		 * */
+
+
 		$ilac_bilgisi = getDetailIlacBilgileri($ilac_bilgisi, 0);
 		$ilac_bilgisi['firma'] = getDetailFirmaBilgisi($firma_bilgisi, 0);
-		
+
+		//_print($ilac_bilgisi);
 		//_print($prospektus);
-		 
+
+		echo $url."<br>";
+		$sql = "
+              INSERT INTO ilaclar SET 
+              ilac_ismi =  '" . str_replace('{',' {',$ilac_bilgisi['ilac_ismi']) . "', 
+              url =  '" . $url . "', 
+              barkod =  '" . (isset($ilac_bilgisi['barkod']) ? $db->escape(str_replace('<br />','\n',$ilac_bilgisi['barkod'])) : '') . "', 
+              etken_madde =  '" . (isset($ilac_bilgisi['etken_maddesi']) ? $db->escape(str_replace('<br />','\n',$ilac_bilgisi['etken_maddesi'])) : '') . "', 
+              fiyat =  '" . (isset($ilac_bilgisi['fiyat']) ? $db->escape(str_replace('<br />','\n',$ilac_bilgisi['fiyat'])) : '') . "', 
+              firma =  '" . (isset($ilac_bilgisi['firma']) ? $db->escape(str_replace('<br />','\n',$ilac_bilgisi['firma'])) : '') . "', 
+              formul =  '" . (isset($prospektus['formulu']) ? $db->escape(str_replace('<br />','\n',$prospektus['formulu'])) : '') . "', 
+              farmakolojik_ozellik =  '" . (isset($prospektus['farmakolojik-ozellikleri']) ? $db->escape(str_replace('<br />','\n',$prospektus['farmakolojik-ozellikleri'])) : '') . "', 
+              endikasyon =  '" . (isset($prospektus['endikasyonlari']) ? $db->escape(str_replace('<br />','\n',$prospektus['endikasyonlari'])) : '') . "', 
+              kontrendikasyon =  '" . (isset($prospektus['kontrendikasyonlari']) ? $db->escape(str_replace('<br />','\n',$prospektus['kontrendikasyonlari'])) : '') . "', 
+              kullanim_sekli =  '" . (isset($prospektus['kullanim-sekli-ve-dozu']) ? $db->escape(str_replace('<br />','\n',$prospektus['kullanim-sekli-ve-dozu'])) : '') . "', 
+              doz_asimi =  '" . (isset($prospektus['doz-asimi-ve-tedavisi']) ? $db->escape(str_replace('<br />','\n',$prospektus['doz-asimi-ve-tedavisi'])) : '') . "', 
+              yan_etkiler =  '" . (isset($prospektus['yan-etkileradvers-etkiler']) ? $db->escape(str_replace('<br />','\n',$prospektus['yan-etkileradvers-etkiler'])) : '') . "', 
+              uyarilar =  '" . (isset($prospektus['uyarilaronlemler']) ? $db->escape(str_replace('<br />','\n',$prospektus['uyarilaronlemler'])) : '') . "', 
+              etkilesimler =  '" . (isset($prospektus['ilac-etkilesimleri']) ? $db->escape(str_replace('<br />','\n',$prospektus['ilac-etkilesimleri'])) : '') . "'   
+           ";
+		   
+		   $db->query($sql);
+		//$connect->query($sql);
 	} 
 }
 
@@ -169,8 +242,6 @@ function getDetailIlacProspektus($data, $key)
 
 	return $ddd;
 }
-  
-
 
 
 function getDetailIlacBilgileri($data, $key)
@@ -227,6 +298,14 @@ function fixTRCharacter($content)
 
 	return str_replace($bad_chr, $new_chr, $content);
 }
-?>  
+
+?>
+
+<script type="text/javascript">
+    $("#searchkey").change(function () {
+        $("#searchpage").remove();
+    });
+</script>
+
 </body>
 </html>
