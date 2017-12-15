@@ -33,7 +33,6 @@ public class barkodActivity extends BaseActivity {
 
     final static String DB_URL = "https://ilac-prospektus.firebaseio.com/";
     Firebase firebase;
-    ListView ilacListAdBarkod;
     Button button;
     EditText editText;
     ArrayList<String> arrayListAdBarkod = new ArrayList<>();
@@ -55,7 +54,6 @@ public class barkodActivity extends BaseActivity {
 
         button = (Button) findViewById(R.id.button3);
         editText = (EditText) findViewById(R.id.EditTextBarkod);
-        ilacListAdBarkod = (ListView) findViewById(R.id.ilaclar_ListViewBarkod);
 
 
         //Firebase veri listelemek için
@@ -71,7 +69,6 @@ public class barkodActivity extends BaseActivity {
 
                 if(editText.getText().length()==13) {
 
-                    ilacListAdBarkod.clearAnimation();
                     arrayListAdBarkod.clear();
 
                     // İlaçları Say
@@ -86,16 +83,37 @@ public class barkodActivity extends BaseActivity {
 
                     if (arrayListAdBarkod.size() > 0) {
                         arrayAdapter = new ArrayAdapter(barkodActivity.this, android.R.layout.simple_list_item_1, arrayListAdBarkod);
-                        ilacListAdBarkod.setAdapter(arrayAdapter);
-                        ilacListAdBarkod.setVisibility(View.VISIBLE);
+
+                        String secilenIlacAdi = arrayAdapter.getItem(0).toString();
+
+                        Intent intent = new Intent(barkodActivity.this, ilacDetay.class).putExtra("from" , "barkod");
+                        Bundle mBundle = new Bundle();
+
+                        //arrayList in içinde tüm ilaçların adı var
+                        //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
+                        //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
+                        for (int k=0; k<MainActivity.veriAdeti; k++){
+                            if(MainActivity.ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
+                                for (int j=0; j<14; j++){
+                                    secilenIlacDetay_Dizi[0][j] = MainActivity.ilacDetay_Dizi[k][j];
+                                }
+                            }
+                        }
+
+                        mBundle.putSerializable("gonderDizi", secilenIlacDetay_Dizi);
+                        intent.putExtras(mBundle);
+
+                        startActivity(intent);
+
+
+
                     } else {
-                        ilacListAdBarkod.setVisibility(View.INVISIBLE);
+
                         Toast.makeText(barkodActivity.this, "Girilen barkoda ait ilaç bulunamadı", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
 
-                    ilacListAdBarkod.setVisibility(View.INVISIBLE);
 
                     Toast.makeText(barkodActivity.this, "Barkod numarası 13 haneli olmalıdır.", Toast.LENGTH_SHORT).show();
                 }
@@ -103,37 +121,6 @@ public class barkodActivity extends BaseActivity {
         });
 
 
-        //Listview item tıklandığında
-        ilacListAdBarkod.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                //listView da elemanlardan herhangi birine tıklandığında ne yapılmasını istiyorsak buraya kodlayacağız
-
-                String secilenIlacAdi = arrayAdapter.getItem(i).toString();
-
-                Intent intent = new Intent(barkodActivity.this, ilacDetay.class).putExtra("from" , "barkod");
-                Bundle mBundle = new Bundle();
-
-                //arrayList in içinde tüm ilaçların adı var
-                //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
-                //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
-                for (int k=0; k<MainActivity.veriAdeti; k++){
-                    if(MainActivity.ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
-                        for (int j=0; j<14; j++){
-                            secilenIlacDetay_Dizi[0][j] = MainActivity.ilacDetay_Dizi[k][j];
-                        }
-                    }
-                }
-
-                mBundle.putSerializable("gonderDizi", secilenIlacDetay_Dizi);
-                intent.putExtras(mBundle);
-
-                startActivity(intent);
-            }
-        });
-
-        //Listview item tıklandığında son
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -146,6 +133,7 @@ public class barkodActivity extends BaseActivity {
         navigationView.setNavigationItemSelectedListener(this);
 
     }
+
 
 
     //Listeleme
