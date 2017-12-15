@@ -18,12 +18,12 @@
             android:title="@string/endikasyonBilgIlaclar" />
         <item
             android:id="@+id/nav_barkod"
-            android:icon="@mipmap/ic_content_paste_black_24dp"
-            android:title="Barkod No. Göre İlaçlar" />
+            android:icon="@mipmap/ic_barcode_black_24dp"
+            android:title="@string/barkod" />
         <item
             android:id="@+id/nav_hakkimizda"
-            android:icon="@mipmap/ic_group_black_24dp"
-            android:title="Firma Adına Göre" />
+            android:icon="@mipmap/ic_business_black_24dp"
+            android:title="@string/firmaAdina" />
         <item
             android:id="@+id/nav_cikis"
             android:icon="@mipmap/ic_exit_to_app_black_24dp"
