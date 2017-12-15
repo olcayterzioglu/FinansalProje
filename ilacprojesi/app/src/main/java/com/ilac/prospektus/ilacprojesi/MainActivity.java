@@ -1,5 +1,6 @@
 package com.ilac.prospektus.ilacprojesi;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Movie;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class MainActivity extends BaseActivity {
 
     private String ilacAdi;
     ListView ilacList;
+    ProgressDialog pd;
     ArrayList<String> arrayList = new ArrayList<>();
     ArrayList<String> arrayList_EtkenMadde = new ArrayList<>();
     ArrayAdapter arrayAdapter, arrayAdapter_EtkenMadde;
@@ -53,6 +55,13 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        pd = new ProgressDialog(MainActivity.this);
+
+        pd.setMessage("İlaçlar yükleniyor..");
+
+        pd.show();
 
         //Main search için  işlemler
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,8 +79,11 @@ public class MainActivity extends BaseActivity {
         searchView=(SearchView) findViewById(R.id.searchView1);
 
 
+
+
         this.retrieveData();
         //Firebase veri listelemek için son
+
 
 
 
@@ -240,6 +252,7 @@ public class MainActivity extends BaseActivity {
         if(arrayList.size()>0){
             arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList);
             ilacList.setAdapter(arrayAdapter);
+            pd.dismiss();
         }else{
             Toast.makeText(MainActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
         }
