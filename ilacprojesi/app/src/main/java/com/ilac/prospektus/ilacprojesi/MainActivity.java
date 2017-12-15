@@ -250,9 +250,10 @@ public class MainActivity extends BaseActivity {
         }
 
         if(arrayList.size()>0){
+            pd.dismiss();
             arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList);
             ilacList.setAdapter(arrayAdapter);
-            pd.dismiss();
+
         }else{
             Toast.makeText(MainActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
         }
