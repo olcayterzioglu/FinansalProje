@@ -74,8 +74,8 @@ public class barkodActivity extends BaseActivity {
                     // İlaçları Say
                     for (int z = 0; z < MainActivity.veriAdeti; z++) {
                         // Tüm ilaçların barkod bilgisinde arama yap
-                        if (MainActivity.ilacDetay_Dizi[z][2].contains(editText.getText())) {
-                            arrayListAdBarkod.add(MainActivity.ilacDetay_Dizi[z][0]);
+                        if (ilacDetay_Dizi[z][2].contains(editText.getText())) {
+                            arrayListAdBarkod.add(ilacDetay_Dizi[z][0]);
                         }
                     }
 
@@ -93,9 +93,9 @@ public class barkodActivity extends BaseActivity {
                         //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
                         //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
                         for (int k=0; k<MainActivity.veriAdeti; k++){
-                            if(MainActivity.ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
+                            if(ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
                                 for (int j=0; j<14; j++){
-                                    secilenIlacDetay_Dizi[0][j] = MainActivity.ilacDetay_Dizi[k][j];
+                                    secilenIlacDetay_Dizi[0][j] = ilacDetay_Dizi[k][j];
                                 }
                             }
                         }

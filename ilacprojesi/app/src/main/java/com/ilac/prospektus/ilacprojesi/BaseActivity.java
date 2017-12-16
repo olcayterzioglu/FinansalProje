@@ -20,6 +20,8 @@ public class BaseActivity extends AppCompatActivity
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
 
+    static String [][] ilacDetay_Dizi = null;
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
