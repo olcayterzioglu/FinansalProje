@@ -118,6 +118,7 @@ public class firmaAdiActivity extends BaseActivity {
                 intent.putExtras(mBundle);
 
                 startActivity(intent);
+                finish();
             }
         });
 
