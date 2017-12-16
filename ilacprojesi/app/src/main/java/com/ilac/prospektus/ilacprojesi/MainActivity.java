@@ -34,14 +34,14 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
-    final static String DB_URL = "https://ilac-prospektus.firebaseio.com/";
-    Firebase firebase;
+//    final static String DB_URL = "https://ilac-prospektus.firebaseio.com/";
+//    Firebase firebase;
 
     private String ilacAdi;
-    ListView ilacList;
-    ProgressDialog pd;
-    ArrayList<String> arrayList = new ArrayList<>();
-    ArrayAdapter arrayAdapter;
+//    ListView ilacList;
+//    ProgressDialog pd;
+//    ArrayList<String> arrayList = new ArrayList<>();
+//    ArrayAdapter arrayAdapter;
 
     //static String [][] ilacDetay_Dizi;
     static String [][] secilenIlacDetay_Dizi = new String[1][14];
@@ -56,35 +56,31 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
 
-        pd = new ProgressDialog(MainActivity.this);
-
-        pd.setMessage("İlaçlar yükleniyor..");
-
-        pd.show();
-
         //Main search için  işlemler
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle("Arama Yap");
 
 
-        //Firebase veri listelemek için
-        Firebase.setAndroidContext(this);
-        firebase = new Firebase(DB_URL);
-        ilacList = (ListView) findViewById(R.id.ilaclar_ListView);
+//        //Firebase veri listelemek için
+//        Firebase.setAndroidContext(this);
+//        firebase = new Firebase(DB_URL);
+        ilacAdListesi = (ListView) findViewById(R.id.ilaclar_ListView);
+
+        arrayIlacAdList.clear();
+        for(int r=0; r<veriAdeti; r++){
+            arrayIlacAdList.add(ilacDetay_Dizi[r][0]);
+        }
+        arrayListAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayIlacAdList);
+        ilacAdListesi.setAdapter(arrayListAdapter);
 
 
         //search
         searchView=(SearchView) findViewById(R.id.searchView1);
 
 
-
-
-        this.retrieveData();
+       // this.retrieveData();
         //Firebase veri listelemek için son
-
-
-
 
         //search
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -95,19 +91,19 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public boolean onQueryTextChange(String text) {
-                arrayAdapter.getFilter().filter(text);
+                arrayListAdapter.getFilter().filter(text);
 
                 return false;
             }
         });
 
 
-        ilacList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ilacAdListesi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //listView da elemanlardan herhangi birine tıklandığında ne yapılmasını istiyorsak buraya kodlayacağız
 
-                String secilenIlacAdi = arrayAdapter.getItem(i).toString();
+                String secilenIlacAdi = arrayListAdapter.getItem(i).toString();
 
                 Intent intent = new Intent(MainActivity.this, ilacDetay.class).putExtra("from" , "main");
                 Bundle mBundle = new Bundle();
@@ -127,6 +123,7 @@ public class MainActivity extends BaseActivity {
                 intent.putExtras(mBundle);
 
                 startActivity(intent);
+                //finish();
             }
         });
 
@@ -156,123 +153,6 @@ public class MainActivity extends BaseActivity {
 //            }
 //        } );
 
-    }
-
-    //Listeleme
-    private void retrieveData(){
-        firebase.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                getUpdates(dataSnapshot);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                getUpdates(dataSnapshot);
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-    }
-    private void getUpdates(DataSnapshot ds){
-
-        //arrayList.clear();
-
-        Ilaclar ilaclar = new Ilaclar();
-
-        if(veriAdeti == 0){
-            for(DataSnapshot data : ds.getChildren()){
-
-                ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
-                ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
-
-                arrayList.add(ilaclar.getAd());
-            }
-
-            veriAdeti = arrayList.size();
-        }
-        else{
-            for(int r=0; r<veriAdeti; r++){
-                arrayList.add(ilacDetay_Dizi[r][0]);
-            }
-        }
-
-        //Eğer liste boş ise verileri çek boş değilse verileri boşuna çekme
-        if(ilacDetay_Dizi==null){
-
-
-            int art=0;
-
-            ilacDetay_Dizi = new String[veriAdeti][14];
-
-            for(DataSnapshot data : ds.getChildren()){
-
-                ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
-                ilaclar.setFirma_adi(data.getValue(Ilaclar.class).getFirma_adi());
-                ilaclar.setBarkod_no(data.getValue(Ilaclar.class).getBarkod_no());
-                ilaclar.setFiyat(data.getValue(Ilaclar.class).getFiyat());
-                ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
-
-                ilaclar.setFormul(data.getValue(Ilaclar.class).getFormul());
-                ilaclar.setFarmokolojik_ozellik(data.getValue(Ilaclar.class).getFarmokolojik_ozellik());
-                ilaclar.setEndikasyonlar(data.getValue(Ilaclar.class).getEndikasyonlar());
-                ilaclar.setKontrendikasyonlar(data.getValue(Ilaclar.class).getKontrendikasyonlar());
-                ilaclar.setUyarilar(data.getValue(Ilaclar.class).getUyarilar());
-
-                ilaclar.setYan_etkiler(data.getValue(Ilaclar.class).getYan_etkiler());
-                ilaclar.setEtkilesimler(data.getValue(Ilaclar.class).getEtkilesimler());
-                ilaclar.setKullanim_sekli(data.getValue(Ilaclar.class).getKullanim_sekli());
-                ilaclar.setDoz_asimi(data.getValue(Ilaclar.class).getDoz_asimi());
-
-
-                ilacDetay_Dizi[art][0]=ilaclar.getAd();
-                ilacDetay_Dizi[art][1]=ilaclar.getFirma_adi();
-                ilacDetay_Dizi[art][2]=ilaclar.getBarkod_no();
-                ilacDetay_Dizi[art][3]=ilaclar.getFiyat();
-                ilacDetay_Dizi[art][4]=ilaclar.getEtken_madde();
-
-                ilacDetay_Dizi[art][5]=ilaclar.getFormul();
-                ilacDetay_Dizi[art][6]=ilaclar.getFarmokolojik_ozellik();
-                ilacDetay_Dizi[art][7]=ilaclar.getEndikasyonlar();
-                ilacDetay_Dizi[art][8]=ilaclar.getKontrendikasyonlar();
-                ilacDetay_Dizi[art][9]=ilaclar.getUyarilar();
-
-                ilacDetay_Dizi[art][10]=ilaclar.getYan_etkiler();
-                ilacDetay_Dizi[art][11]=ilaclar.getEtkilesimler();
-                ilacDetay_Dizi[art][12]=ilaclar.getKullanim_sekli();
-                ilacDetay_Dizi[art][13]=ilaclar.getDoz_asimi();
-
-                //liste bitince çıkması için
-                art = art + 1;
-                if (art == veriAdeti){
-                    break;
-                }
-            }
-        }
-
-
-
-        if(arrayList.size()>0){
-            pd.dismiss();
-            arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList);
-            ilacList.setAdapter(arrayAdapter);
-
-        }else{
-            Toast.makeText(MainActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
-        }
     }
 
 
