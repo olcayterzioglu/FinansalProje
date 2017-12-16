@@ -41,12 +41,11 @@ public class MainActivity extends BaseActivity {
     ListView ilacList;
     ProgressDialog pd;
     ArrayList<String> arrayList = new ArrayList<>();
-    ArrayList<String> arrayList_EtkenMadde = new ArrayList<>();
-    ArrayAdapter arrayAdapter, arrayAdapter_EtkenMadde;
+    ArrayAdapter arrayAdapter;
 
     //static String [][] ilacDetay_Dizi;
     static String [][] secilenIlacDetay_Dizi = new String[1][14];
-    static int veriAdeti=0;
+    //static int veriAdeti=0;
 
     //Search
     SearchView searchView;
@@ -194,18 +193,22 @@ public class MainActivity extends BaseActivity {
 
         Ilaclar ilaclar = new Ilaclar();
 
-        for(DataSnapshot data : ds.getChildren()){
+        if(veriAdeti == 0){
+            for(DataSnapshot data : ds.getChildren()){
 
-            ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
-            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
+                ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
+                ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
 
-            arrayList.add(ilaclar.getAd());
-            arrayList_EtkenMadde.add((ilaclar.getEtken_madde()));
+                arrayList.add(ilaclar.getAd());
+            }
+
+            veriAdeti = arrayList.size();
         }
-
-        veriAdeti = arrayList.size();
-
-
+        else{
+            for(int r=0; r<veriAdeti; r++){
+                arrayList.add(ilacDetay_Dizi[r][0]);
+            }
+        }
 
         //Eğer liste boş ise verileri çek boş değilse verileri boşuna çekme
         if(ilacDetay_Dizi==null){
@@ -269,12 +272,6 @@ public class MainActivity extends BaseActivity {
 
         }else{
             Toast.makeText(MainActivity.this, "Veri Yok", Toast.LENGTH_SHORT).show();
-        }
-        if(arrayList_EtkenMadde.size()>0){
-            arrayAdapter_EtkenMadde= new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList_EtkenMadde);
-
-        }else{
-            Toast.makeText(MainActivity.this, "Etken Madde Yok", Toast.LENGTH_SHORT).show();
         }
     }
 

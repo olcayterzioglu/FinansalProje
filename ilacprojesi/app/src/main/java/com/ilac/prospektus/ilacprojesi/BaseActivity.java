@@ -21,6 +21,7 @@ public class BaseActivity extends AppCompatActivity
     DatabaseReference databaseReference = database.getReference();
 
     static String [][] ilacDetay_Dizi = null;
+    static int veriAdeti=0;
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

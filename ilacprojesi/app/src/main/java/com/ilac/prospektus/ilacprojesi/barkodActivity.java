@@ -38,10 +38,7 @@ public class barkodActivity extends BaseActivity {
     ArrayList<String> arrayListAdBarkod = new ArrayList<>();
     ArrayAdapter arrayAdapter;
 
-    //String [][] ilacDetay_Dizi;
     String [][] secilenIlacDetay_Dizi = new String[1][14];
-
-    //int veriAdeti=0;
 
 
     @Override
@@ -72,7 +69,7 @@ public class barkodActivity extends BaseActivity {
                     arrayListAdBarkod.clear();
 
                     // İlaçları Say
-                    for (int z = 0; z < MainActivity.veriAdeti; z++) {
+                    for (int z = 0; z < veriAdeti; z++) {
                         // Tüm ilaçların barkod bilgisinde arama yap
                         if (ilacDetay_Dizi[z][2].contains(editText.getText())) {
                             arrayListAdBarkod.add(ilacDetay_Dizi[z][0]);
@@ -92,7 +89,7 @@ public class barkodActivity extends BaseActivity {
                         //arrayList in içinde tüm ilaçların adı var
                         //ilacDetay_Dizi nin içinde tüm ilaçların bilgileri var
                         //seçilen ilacın ismi ile ilacDetay dizisinde aynı olanı bulup secilenIlacDetay_Dizi ye kopyalıyorum
-                        for (int k=0; k<MainActivity.veriAdeti; k++){
+                        for (int k=0; k<veriAdeti; k++){
                             if(ilacDetay_Dizi[k][0].equals(secilenIlacAdi)){
                                 for (int j=0; j<14; j++){
                                     secilenIlacDetay_Dizi[0][j] = ilacDetay_Dizi[k][j];
