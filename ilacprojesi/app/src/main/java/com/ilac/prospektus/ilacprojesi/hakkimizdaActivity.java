@@ -107,8 +107,8 @@ public class hakkimizdaActivity extends BaseActivity{
         buton_serkanLinkedin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/"));
-                //startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/serkan-başar-0b664297"));
+                startActivity(intent);
             }
         });
 
