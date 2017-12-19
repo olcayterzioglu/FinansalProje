@@ -141,6 +141,7 @@ public class etkenmaddeActivity extends BaseActivity{
                 intent.putExtras(mBundle);
 
                 startActivity(intent);
+                finish();
             }
         });
 

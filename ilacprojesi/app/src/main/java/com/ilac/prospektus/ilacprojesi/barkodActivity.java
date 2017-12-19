@@ -31,8 +31,6 @@ import java.util.ArrayList;
 
 public class barkodActivity extends BaseActivity {
 
-    final static String DB_URL = "https://ilac-prospektus.firebaseio.com/";
-    Firebase firebase;
     Button button;
     EditText editText;
     ArrayList<String> arrayListAdBarkod = new ArrayList<>();
@@ -53,11 +51,10 @@ public class barkodActivity extends BaseActivity {
         editText = (EditText) findViewById(R.id.EditTextBarkod);
 
 
-        //Firebase veri listelemek için
-        Firebase.setAndroidContext(this);
-        firebase = new Firebase(DB_URL);
-        this.retrieveData();
-        //Firebase veri listelemek için son
+        for(int r=0; r<veriAdeti; r++){
+            arrayListAdBarkod.add(ilacDetay_Dizi[r][8]);
+        }
+
         Toast.makeText(barkodActivity.this, "Barkod numarası giriniz.", Toast.LENGTH_SHORT).show();
 
 
@@ -101,8 +98,7 @@ public class barkodActivity extends BaseActivity {
                         intent.putExtras(mBundle);
 
                         startActivity(intent);
-
-
+                        finish();
 
                     } else {
 
@@ -128,53 +124,6 @@ public class barkodActivity extends BaseActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-    }
-
-
-
-    //Listeleme
-    private void retrieveData(){
-        firebase.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                getUpdates(dataSnapshot);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                getUpdates(dataSnapshot);
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-    }
-    private void getUpdates(DataSnapshot ds){
-
-        arrayListAdBarkod.clear();
-
-        Ilaclar ilaclar = new Ilaclar();
-
-        for(DataSnapshot data : ds.getChildren()) {
-
-            ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
-            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
-
-            arrayListAdBarkod.add(ilaclar.getAd());
-        }
 
     }
 

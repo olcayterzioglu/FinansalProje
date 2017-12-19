@@ -27,8 +27,7 @@ import java.util.ArrayList;
 
 public class endikasyonActivity extends BaseActivity {
 
-    final static String DB_URL = "https://ilac-prospektus.firebaseio.com/";
-    Firebase firebase;
+
     ListView ilacListAd;
     TextView bilgi;
     SearchView searchEndikasyon;
@@ -54,12 +53,9 @@ public class endikasyonActivity extends BaseActivity {
         bilgi.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
 
-
-        //Firebase veri listelemek için
-        Firebase.setAndroidContext(this);
-        firebase = new Firebase(DB_URL);
-        this.retrieveData();
-        //Firebase veri listelemek için son
+        for(int r=0; r<veriAdeti; r++){
+            arrayListAd.add(ilacDetay_Dizi[r][8]);
+        }
 
 
 
@@ -148,6 +144,7 @@ public class endikasyonActivity extends BaseActivity {
                 intent.putExtras(mBundle);
 
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -166,52 +163,7 @@ public class endikasyonActivity extends BaseActivity {
     }
 
 
-    //Listeleme
-    private void retrieveData(){
-        firebase.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                getUpdates(dataSnapshot);
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                getUpdates(dataSnapshot);
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-    }
-    private void getUpdates(DataSnapshot ds){
-
-        arrayListAd.clear();
-
-        Ilaclar ilaclar = new Ilaclar();
-
-        for(DataSnapshot data : ds.getChildren()) {
-
-            ilaclar.setAd(data.getValue(Ilaclar.class).getAd());
-            ilaclar.setEtken_madde(data.getValue(Ilaclar.class).getEtken_madde());
-
-            arrayListAd.add(ilaclar.getAd());
-
-
-        }
-
-    }
 
 
     @Override
